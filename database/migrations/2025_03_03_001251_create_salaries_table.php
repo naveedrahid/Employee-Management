@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')->constrained()->onDelete('cascade');
-            $table->foreignId('bank_detail_id')->nullable()->constrained('bank_details')->onDelete('setNull');
+            $table->foreignId('bank_detail_id')->nullable()->constrained()->onDelete('set null');
             $table->decimal('basic_salary', 10, 2);
             $table->decimal('allowance', 10, 2)->default(0);
             $table->decimal('deduction', 10, 2)->default(0);
