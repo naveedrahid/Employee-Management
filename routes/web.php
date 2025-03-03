@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
@@ -55,5 +55,5 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
     });
 
     // // Home/Dashboard
-    Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('permission:view dashboard');
+    Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('permission:view dashboard');
 });
