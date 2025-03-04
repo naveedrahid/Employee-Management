@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\BranchController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
@@ -27,7 +28,7 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
         Route::get('/{permissionId}/delete', [PermissionController::class, 'destroy'])->middleware('permission:delete permission');
     });
 
-    // // Roles Routes
+    // Roles Routes
 
     Route::group(['prefix' => 'roles'], function () {
         Route::get('/', [RoleController::class, 'index'])->middleware('permission:view role')->name('roles.index');
@@ -42,7 +43,7 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
     });
         
 
-    // // Users Routes
+    // Users Routes
     Route::group(['prefix' => 'users'], function(){ 
         Route::get('/', [UserController::class, 'index'])->middleware('permission:view user')->name('users.index');
         Route::get('/create', [UserController::class, 'create'])->middleware('permission:create user')->name('users.create');
@@ -52,6 +53,16 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
         Route::delete('/{user}', [UserController::class, 'destroy'])->middleware('permission:delete user')->name('users.destroy');
 
         Route::get('/{userId}/delete', [UserController::class, 'destroy'])->middleware('permission:delete user');
+    });
+
+    // Users Branches
+    Route::group(['prefix' => 'branches'], function(){ 
+        Route::get('/', [BranchController::class, 'index'])->middleware('permission:view branch')->name('branches.index');
+        Route::get('/create', [BranchController::class, 'create'])->middleware('permission:create branch')->name('branches.create');
+        Route::post('/', [BranchController::class, 'store'])->middleware('permission:create branch')->name('branches.store');
+        Route::get('/{branch}/edit', [BranchController::class, 'edit'])->middleware('permission:update branch')->name('branches.edit');
+        Route::put('/{branch}', [BranchController::class, 'update'])->middleware('permission:update branch')->name('branches.update');
+        Route::delete('/{branch}', [BranchController::class, 'destroy'])->middleware('permission:delete branch')->name('branches.destroy');
     });
 
     // // Home/Dashboard

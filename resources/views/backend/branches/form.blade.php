@@ -1,0 +1,90 @@
+@section('title', 'Branch')
+<x-app-layout>
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="card">
+            <h5 class="card-header">Create New Branch</h5>
+            <div class="card-body">
+                {!! Form::model($branch, [
+                    'url' => $branch->exists ? route('backend.branches.update', $branch->id) : route('backend.branches.store'),
+                    'method' => $branch->exists ? 'PUT' : 'POST',
+                    'id' => $branch->exists ? 'branchUpdate' : 'branchCreate',
+                ]) !!}
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        {!! Form::label('name', 'Branch Name', ['class' => 'form-label']) !!}
+                        {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                        <div class="form-text">
+                            We'll never share your details with anyone else.
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        {!! Form::label('country_id', 'Country *') !!}
+                        {!! Form::select(
+                            'country_id',
+                            ['' => 'Select Country'] + $countriesList,
+                            old('country_id', $branch->country_id),
+                            [
+                                'class' => 'form-control form-select select2',
+                                'id' => 'country',
+                            ]
+                        ) !!}
+                    </div>
+                    
+                    <div class="col-12 col-md-4">
+                        {!! Form::label('city_id', 'City Name', ['class' => 'form-label']) !!}
+                        {!! Form::select(
+                            'city_id',
+                            ['' => 'Select City'] + ($citiesList[$branch->country_id] ?? []),
+                            old('city_id', $branch->city_id),
+                            [
+                                'class' => 'form-control form-select select2',
+                                'id' => 'city',
+                            ]
+                        ) !!}
+                    </div>
+                    
+                    <div class="col-12 col-md-12 mt-4">
+                        {!! Form::label('address', 'Address', ['class' => 'form-label']) !!}
+                        {!! Form::textarea('address', old('address'), ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="demo-inline-spacing">
+                        {!! Form::submit($branch->exists ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
+                    </div>
+                </div>
+                {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+    @push('js')
+        <script>
+            $(document).ready(function() {
+                const cities = @json($citiesList);
+    
+                function populateCities(countryId, selectedCityId = null) {
+                    const countryCities = cities[countryId] || {};
+                    const $citySelect = $('#city');
+                    $citySelect.empty().append(new Option('Select City', ''));
+    
+                    $.each(countryCities, function(cityId, cityName) {
+                        $citySelect.append(new Option(cityName, cityId));
+                    });
+    
+                    if (selectedCityId) {
+                        $citySelect.val(selectedCityId);
+                    }
+                }
+    
+                const initialCountryId = $('#country').val();
+                const initialCityId = '{{ old('city_id', $branch->city_id) }}';
+                if (initialCountryId) {
+                    populateCities(initialCountryId, initialCityId);
+                }
+    
+                $('#country').on('change', function() {
+                    const countryId = $(this).val();
+                    populateCities(countryId);
+                });
+            });
+        </script>
+    @endpush
+</x-app-layout>
