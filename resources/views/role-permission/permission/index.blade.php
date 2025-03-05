@@ -17,7 +17,7 @@
                     <div class="card-header">
                         <h4>Permissions
                             @can('create permission')
-                                <a href="{{ url('permissions/create') }}" class="btn btn-primary float-end">Add Permission</a>
+                                <a href="{{ url('backend/permissions/create') }}" class="btn btn-primary float-end">Add Permission</a>
                             @endcan
                         </h4>
                     </div>
@@ -38,12 +38,12 @@
                                         <td>{{ $permission->name }}</td>
                                         <td>
                                             @can('update permission')
-                                                <a href="{{ url('permissions/' . $permission->id . '/edit') }}"
+                                                <a href="{{ url('backend/permissions/' . $permission->id . '/edit') }}"
                                                     class="btn btn-success">Edit</a>
                                             @endcan
 
                                             @can('delete permission')
-                                                <a href="{{ url('permissions/' . $permission->id . '/delete') }}"
+                                                <a href="{{ url('backend/permissions/' . $permission->id . '/delete') }}"
                                                     class="btn btn-danger mx-2">Delete</a>
                                             @endcan
                                         </td>

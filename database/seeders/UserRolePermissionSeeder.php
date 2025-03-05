@@ -47,7 +47,7 @@ class UserRolePermissionSeeder extends Seeder
             ],
 
             /* permissions roles */
-            
+
             [
                 'name' => 'view permission',
                 'guard_name' => 'web',
@@ -74,7 +74,7 @@ class UserRolePermissionSeeder extends Seeder
             ],
 
             /* permissions user */
-            
+
             [
                 'name' => 'view user',
                 'guard_name' => 'web',
@@ -101,7 +101,7 @@ class UserRolePermissionSeeder extends Seeder
             ],
 
             /* permissions branches */
-            
+
             [
                 'name' => 'view branch',
                 'guard_name' => 'web',
@@ -126,9 +126,9 @@ class UserRolePermissionSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
-            
+
             /* permissions dashboard */
-            
+
             [
                 'name' => 'view dashboard',
                 'guard_name' => 'web',
@@ -180,5 +180,26 @@ class UserRolePermissionSeeder extends Seeder
         ]);
 
         $superAdminUser->assignRole($superAdminRole);
+
+        $adminUser = User::firstOrCreate([
+            'email' => 'admin@gmail.com'
+        ], [
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('12345678'),
+        ]);
+
+        $adminUser->assignRole($adminRole);
+
+
+        $staffUser = User::firstOrCreate([
+            'email' => 'staff@gmail.com',
+        ], [
+            'name' => 'Staff',
+            'email' => 'staff@gmail.com',
+            'password' => Hash::make('12345678'),
+        ]);
+
+        $staffUser->assignRole($staffRole);
     }
 }

@@ -14,11 +14,11 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>Edit User
-                            <a href="{{ url('users') }}" class="btn btn-danger float-end">Back</a>
+                            <a href="{{ url('backend/users') }}" class="btn btn-danger float-end">Back</a>
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ url('users/' . $user->id) }}" method="POST">
+                        <form action="{{ route('backend.users.update', $user->id) }}" method="POST">
                             @csrf
                             @method('PUT')
 

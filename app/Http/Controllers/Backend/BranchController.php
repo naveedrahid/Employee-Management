@@ -53,7 +53,7 @@ use Illuminate\Http\Request;
     
         Branch::create($validatedData);
     
-        return redirect()->route('backend.branches.index')->with('success', 'Branch created successfully');
+        return response()->json(['message' => 'Branch created successfully'], 200);
     }
 
     /**
@@ -94,8 +94,8 @@ use Illuminate\Http\Request;
         ]);
 
         $branch->update($validatedData);
-    
-        return redirect()->route('backend.branches.index')->with('success', 'Branch created successfully');
+        
+        return response()->json(['message' => 'Branch updated successfully'], 200);
     }
 
     /**
@@ -105,6 +105,6 @@ use Illuminate\Http\Request;
     {
         $branch->delete();
     
-        return redirect()->route('backend.branches.index')->with('success', 'Branch deleted successfully');
+        return response()->json(['message' => 'Branch deleted successfully'], 200);
     }
 }
