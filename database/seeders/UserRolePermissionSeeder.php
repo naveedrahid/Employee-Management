@@ -18,6 +18,11 @@ class UserRolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('permissions')->truncate();
+        DB::table('roles')->truncate();
+        DB::table('users')->truncate();
+
         DB::table('permissions')->insert([
 
             /* permissions roles */
@@ -127,6 +132,33 @@ class UserRolePermissionSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
 
+            /* permissions departments */
+
+            [
+                'name' => 'view department',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'create department',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'update department',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'delete department',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+
             /* permissions dashboard */
 
             [
@@ -136,23 +168,6 @@ class UserRolePermissionSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
         ]);
-        // Permission::create(['name' => 'view role']);
-        // Permission::create(['name' => 'create role']);
-        // Permission::create(['name' => 'update role']);
-        // Permission::create(['name' => 'delete role']);
-
-        // Permission::create(['name' => 'view permission']);
-        // Permission::create(['name' => 'create permission']);
-        // Permission::create(['name' => 'update permission']);
-        // Permission::create(['name' => 'delete permission']);
-
-        // Permission::create(['name' => 'view user']);
-        // Permission::create(['name' => 'create user']);
-        // Permission::create(['name' => 'update user']);
-        // Permission::create(['name' => 'delete user']);
-
-        // Permission::create(['name' => 'view dashboard']);
-
 
         // Create Roles
         $superAdminRole = Role::create(['name' => 'super-admin']);

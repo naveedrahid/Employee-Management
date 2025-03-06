@@ -1,4 +1,4 @@
-@section('title', 'Branches')
+@section('title', 'Departments')
 <x-app-layout>
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card position-relative">
@@ -6,41 +6,41 @@
                 <i class="fas fa-spinner fa-spin fa-3x"></i>
             </div>
             <div class="d-flex align-items-center justify-content-between">
-                <h5 class="card-header">{{ __('Manage Branches') }}</h5>
+                <h5 class="card-header">{{ __('Manage Departments') }}</h5>
                 <div class="card-header">
-                    <a href="{{ route('backend.branches.create') }}" class="btn btn-secondary">{{ __('Add Branch') }}</a>
+                    <a href="{{ route('backend.branches.create') }}" class="btn btn-secondary">{{ __('Add Department') }}</a>
                 </div>
             </div>
             <div class="table-responsive text-nowrap">
                 <table class="table table-striped">
                     <thead class="table-light">
                         <tr>
-                            <th>{{ __('Branch Name') }}</th>
+                            <th>{{ __('Department Name') }}</th>
+                            <th>{{ __('Branch') }}</th>
                             <th>{{ __('Country') }}</th>
                             <th>{{ __('City') }}</th>
-                            <th>{{ __('Address') }}</th>
                             <th>{{ __('Action') }}</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @forelse ($branches as $branch)
+                        @forelse ($departments as $department)
                             <tr>
-                                <td>{{ $branch->name }}</td>
-                                <td>{{ $branch->country->name }}</td>
-                                <td>{{ $branch->city->name }}</td>
-                                <td>{{ $branch->address }}</td>
+                                <td>{{ $department->name }}</td>
+                                <td>{{ $department->branch->name }}</td>
+                                <td>{{ $department->country->name }}</td>
+                                <td>{{ $department->city->name }}</td>
                                 <td>
                                     <a class="btn btn-icon btn-primary"
-                                        href="{{ route('backend.branches.edit', $branch->id) }}"><i
+                                        href="{{ route('backend.department.edit', $department->id) }}"><i
                                             class="icon-base bx bx-edit-alt text-white"></i></a>
-                                    <a class="btn btn-icon btn-danger deleteBranch"
-                                        href="{{ route('backend.branches.destroy', $branch->id) }}"><i
+                                    <a class="btn btn-icon btn-danger deleteRow"
+                                        href="{{ route('backend.department.destroy', $department->id) }}"><i
                                             class="icon-base bx bx-trash text-white"></i></a>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td class="text-center" colspan="9">{{ __('No Branches Found') }}</td>
+                                <td class="text-center" colspan="9">{{ __('No Departments Found') }}</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -49,8 +49,6 @@
         </div>
     </div>
     @push('css')
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css"
-            crossorigin="anonymous" referrerpolicy="no-referrer" />
         <style>
             div#loadingSpinner {
                 position: fixed;
@@ -72,19 +70,17 @@
         </style>
     @endpush
     @push('js')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" crossorigin="anonymous"
-            referrerpolicy="no-referrer"></script>
         <script>
             $(document).ready(function() {
                 /* Delete Branch */
-                $('.deleteBranch').on('click', function (e) {
+                $('.deleteRow').on('click', function (e) {
                     e.preventDefault();
 
                     const instance = $(this);
                     const url = instance.attr('href');
                     const token = $('meta[name="csrf-token"]').attr('content');
 
-                    if (confirm('Are you sure you want to delete this Branch?')) {
+                    if (confirm('Are you sure you want to delete this Department?')) {
                         $('#loadingSpinner').show();
                         
                         $.ajax({

@@ -39,6 +39,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Page CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        div#loadingSpinner {
+            position: fixed;
+            left: 0;
+            right: 0;
+            margin: auto;
+            top: 0;
+            bottom: 0;
+            z-index: 99;
+            background: #00000036;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        div#loadingSpinner i {
+            color: #007bff;
+        }
+    </style>
+
     @stack('css')
     <!-- Helpers -->
     <script src="{{ asset('admin/assets/vendor/js/helpers.js') }}"></script>
@@ -99,26 +121,8 @@
                         </div>
 
                         <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
-                            <!-- Search -->
-                            <div class="navbar-nav align-items-center me-auto">
-                                <div class="nav-item d-flex align-items-center">
-                                    <span class="w-px-22 h-px-22"><i class="icon-base bx bx-search icon-md"></i></span>
-                                    <input type="text"
-                                        class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none"
-                                        placeholder="Search..." aria-label="Search..." />
-                                </div>
-                            </div>
-                            <!-- /Search -->
 
                             <ul class="navbar-nav flex-row align-items-center ms-md-auto">
-                                <!-- Place this tag where you want the button to render. -->
-                                <li class="nav-item lh-1 me-4">
-                                    <a class="github-button"
-                                        href="https://github.com/themeselection/sneat-bootstrap-html-admin-template-free"
-                                        data-icon="octicon-star" data-size="large" data-show-count="true"
-                                        aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">Star</a>
-                                </li>
-
                                 <!-- User -->
                                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                     <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);"
@@ -261,6 +265,9 @@
 
     <!-- Place this tag before closing body tag for github widget button. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
 
     {{-- ajax form error handler --}}
 
