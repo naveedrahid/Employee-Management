@@ -19,77 +19,87 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
-        <!-- Dashboards -->
-        <li class="menu-item active open">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <!-- Dashboard -->
+        <li class="menu-item {{ request()->is('backend') ? 'active open' : '' }}">
+            <a href="{{ route('backend.home') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
-                <div class="text-truncate" data-i18n="Dashboards">Dashboards</div>
-                <span class="badge rounded-pill bg-danger ms-auto">5</span>
+                <div class="text-truncate">Dashboard</div>
             </a>
-            <ul class="menu-sub">
-                <li class="menu-item active">
-                    <a href="javascript:void(0);" class="menu-link">
-                        <div class="text-truncate" data-i18n="Analytics">Analytics</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/dashboards-crm.html"
-                        target="_blank" class="menu-link">
-                        <div class="text-truncate" data-i18n="CRM">CRM</div>
-                        <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro
-                        </div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/app-ecommerce-dashboard.html"
-                        target="_blank" class="menu-link">
-                        <div class="text-truncate" data-i18n="eCommerce">eCommerce</div>
-                        <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro
-                        </div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/app-logistics-dashboard.html"
-                        target="_blank" class="menu-link">
-                        <div class="text-truncate" data-i18n="Logistics">Logistics</div>
-                        <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro
-                        </div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/app-academy-dashboard.html"
-                        target="_blank" class="menu-link">
-                        <div class="text-truncate" data-i18n="Academy">Academy</div>
-                        <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro
-                        </div>
-                    </a>
-                </li>
-            </ul>
         </li>
-        <!-- Apps & Pages -->
 
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div class="text-truncate" data-i18n="Authentications">Authentications</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                        <div class="text-truncate" data-i18n="Basic">Login</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="auth-register-basic.html" class="menu-link" target="_blank">
-                        <div class="text-truncate" data-i18n="Basic">Register</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                        <div class="text-truncate" data-i18n="Basic">Forgot Password</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+        <!-- Roles & Permissions -->
+        @if (auth()->user()->can('view role') || auth()->user()->can('view permission') || auth()->user()->can('view user'))
+            <li
+                class="menu-item {{ request()->is('backend/roles*') || request()->is('backend/permissions*') || request()->is('backend/users*') ? 'active open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-lock"></i>
+                    <div class="text-truncate">Roles & Permissions</div>
+                </a>
+                <ul class="menu-sub">
+                    @can('view role')
+                        <li class="menu-item {{ request()->is('backend/roles*') ? 'active' : '' }}">
+                            <a href="{{ route('backend.roles.index') }}" class="menu-link">
+                                <div class="text-truncate">Roles</div>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('view permission')
+                        <li class="menu-item {{ request()->is('backend/permissions*') ? 'active' : '' }}">
+                            <a href="{{ route('backend.permissions.index') }}" class="menu-link">
+                                <div class="text-truncate">Permissions</div>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('view user')
+                        <li class="menu-item {{ request()->is('backend/users*') ? 'active' : '' }}">
+                            <a href="{{ route('backend.users.index') }}" class="menu-link">
+                                <div class="text-truncate">Users</div>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endif
+
+        <!-- Branches & Departments -->
+        @if (auth()->user()->can('view department') ||
+                auth()->user()->can('view branch') ||
+                auth()->user()->can('view position'))
+            <li
+                class="menu-item {{ request()->is('backend/departments*') || request()->is('backend/branches*') || request()->is('backend/positions*') ? 'active open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-building"></i>
+                    <div class="text-truncate">Branches & Departments</div>
+                </a>
+                <ul class="menu-sub">
+                    @can('view department')
+                        <li class="menu-item {{ request()->is('backend/departments*') ? 'active' : '' }}">
+                            <a href="{{ route('backend.department.index') }}" class="menu-link">
+                                <div class="text-truncate">Departments</div>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('view branch')
+                        <li class="menu-item {{ request()->is('backend/branches*') ? 'active' : '' }}">
+                            <a href="{{ route('backend.branches.index') }}" class="menu-link">
+                                <div class="text-truncate">Branches</div>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('view position')
+                        <li class="menu-item {{ request()->is('backend/positions*') ? 'active' : '' }}">
+                            <a href="{{ route('backend.position.index') }}" class="menu-link">
+                                <div class="text-truncate">Positions</div>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endif
     </ul>
+
 </aside>

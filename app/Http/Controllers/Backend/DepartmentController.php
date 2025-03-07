@@ -27,7 +27,7 @@ class DepartmentController extends Controller
         $branches = Branch::with(['country', 'city'])->get();
         return view('backend.departments.form', compact('department', 'branches'));
     }
-    
+
     /**
      * Store a newly created resource in storage.
      */
@@ -41,15 +41,15 @@ class DepartmentController extends Controller
         if ($validatedData->fails()) {
             return response()->json(['errors' => $validatedData->errors()], 422);
         }
-        
+
         $department = new Department();
         $department->name = $request->name;
         $department->branch_id = $request->branch_id;
         $department->save();
 
-        return response()->json(['message' => 'Department created successfully', 200]);
+        return response()->json(['message' => 'Position created successfully', 200]);
     }
-    
+
     /**
      * Display the specified resource.
      */
@@ -57,7 +57,7 @@ class DepartmentController extends Controller
     {
         //
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      */

@@ -39,9 +39,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Page CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+        span.select2.select2-container span.select2-selection {
+            height: 37px;
+        }
+
         div#loadingSpinner {
             position: fixed;
             left: 0;
@@ -194,40 +200,6 @@
                     {{ $slot }}
                     <!-- / Content -->
 
-                    <!-- Footer -->
-                    {{-- <footer class="content-footer footer bg-footer-theme">
-                        <div class="container-xxl">
-                            <div
-                                class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
-                                <div class="mb-2 mb-md-0">
-                                    &#169;
-                                    <script>
-                                        document.write(new Date().getFullYear());
-                                    </script>
-                                    , made with ❤️ by
-                                    <a href="https://themeselection.com" target="_blank"
-                                        class="footer-link">ThemeSelection</a>
-                                </div>
-                                <div class="d-none d-lg-inline-block">
-                                    <a href="https://themeselection.com/item/category/admin-templates/" target="_blank"
-                                        class="footer-link me-4">Admin Templates</a>
-
-                                    <a href="https://themeselection.com/license/" class="footer-link me-4"
-                                        target="_blank">License</a>
-                                    <a href="https://themeselection.com/item/category/bootstrap-admin-templates/"
-                                        target="_blank" class="footer-link me-4">Bootstrap Dashboard</a>
-
-                                    <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/"
-                                        target="_blank" class="footer-link me-4">Documentation</a>
-
-                                    <a href="https://github.com/themeselection/sneat-bootstrap-html-admin-template-free/issues"
-                                        target="_blank" class="footer-link">Support</a>
-                                </div>
-                            </div>
-                        </div>
-                    </footer> --}}
-                    <!-- / Footer -->
-
                     <div class="content-backdrop fade"></div>
                 </div>
                 <!-- Content wrapper -->
@@ -268,6 +240,15 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" crossorigin="anonymous"
         referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
 
     {{-- ajax form error handler --}}
 

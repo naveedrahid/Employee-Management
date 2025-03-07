@@ -1,10 +1,4 @@
 <x-app-layout>
-    <div class="container mt-5">
-        <a href="{{ url('backend/roles') }}" class="btn btn-primary mx-1">Roles</a>
-        <a href="{{ url('backend/permissions') }}" class="btn btn-info mx-1">Permissions</a>
-        <a href="{{ url('backend/users') }}" class="btn btn-warning mx-1">Users</a>
-    </div>
-
     <div class="container mt-2">
         <div class="row">
             <div class="col-md-12">

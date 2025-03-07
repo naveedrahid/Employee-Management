@@ -40,7 +40,7 @@
 
                     <div class="col-12 col-md-3">
                         {!! Form::label('country', 'Country', ['class' => 'form-label']) !!}
-                        {!! Form::text('country', old('country', $department->country->name), [
+                        {!! Form::text('country', old('country', optional($department->country)->name), [
                             'class' => 'form-control',
                             'id' => 'country',
                             'readonly' => 'true',
@@ -49,7 +49,7 @@
 
                     <div class="col-12 col-md-3">
                         {!! Form::label('city', 'City', ['class' => 'form-label']) !!}
-                        {!! Form::text('city', old('country', $department->city->name), [
+                        {!! Form::text('city', old('country', optional($department->city)->name), [
                             'class' => 'form-control',
                             'id' => 'city',
                             'readonly' => 'true',

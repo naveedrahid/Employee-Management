@@ -7,8 +7,8 @@ use App\Models\Branch;
 use App\Models\Country;
 use Illuminate\Http\Request;
 
-    class BranchController extends Controller
-    {
+class BranchController extends Controller
+{
     /**
      * Display a listing of the resource.
      */
@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
         $branches = Branch::with('country', 'city')->get();
         return view('backend.branches.index', compact('branches'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -25,19 +25,19 @@ use Illuminate\Http\Request;
     {
         $branch = new Branch();
         $method = 'POST';
-    
+
         $countries = Country::with('cities')->get();
-    
+
         $countriesList = $countries->pluck('name', 'id')->toArray();
-    
+
         $citiesList = [];
         foreach ($countries as $country) {
             $citiesList[$country->id] = $country->cities->pluck('name', 'id')->toArray();
         }
-    
+
         return view('backend.branches.form', compact('branch', 'method', 'countriesList', 'citiesList'));
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -50,9 +50,9 @@ use Illuminate\Http\Request;
             'city_id' => 'required|exists:cities,id',
             'address' => 'required|string|max:255',
         ]);
-    
+
         Branch::create($validatedData);
-    
+
         return response()->json(['message' => 'Branch created successfully'], 200);
     }
 
@@ -71,9 +71,9 @@ use Illuminate\Http\Request;
     {
         $method = 'PUT';
         $countries = Country::with('cities')->get();
-    
+
         $countriesList = $countries->pluck('name', 'id')->toArray();
-    
+
         $citiesList = [];
         foreach ($countries as $country) {
             $citiesList[$country->id] = $country->cities->pluck('name', 'id')->toArray();
@@ -94,7 +94,7 @@ use Illuminate\Http\Request;
         ]);
 
         $branch->update($validatedData);
-        
+
         return response()->json(['message' => 'Branch updated successfully'], 200);
     }
 
@@ -104,7 +104,7 @@ use Illuminate\Http\Request;
     public function destroy(Branch $branch)
     {
         $branch->delete();
-    
+
         return response()->json(['message' => 'Branch deleted successfully'], 200);
     }
 }

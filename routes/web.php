@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\BranchController;
 use App\Http\Controllers\Backend\DepartmentController;
 use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\PositionController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\HomeController;
@@ -74,6 +75,16 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
         Route::get('/{department}/edit', [DepartmentController::class, 'edit'])->middleware('permission:update department')->name('department.edit');
         Route::put('/{department}', [DepartmentController::class, 'update'])->middleware('permission:update department')->name('department.update');
         Route::delete('/{department}', [DepartmentController::class, 'destroy'])->middleware('permission:delete department')->name('department.destroy');
+    });
+
+    // Positions routes
+    Route::group(['prefix' => 'positions'], function(){ 
+        Route::get('/', [PositionController::class, 'index'])->middleware('permission:view position')->name('position.index');
+        Route::get('/create', [PositionController::class, 'create'])->middleware('permission:create position')->name('position.create');
+        Route::post('/', [PositionController::class, 'store'])->middleware('permission:create position')->name('position.store');
+        Route::get('/{position}/edit', [PositionController::class, 'edit'])->middleware('permission:update position')->name('position.edit');
+        Route::put('/{position}', [PositionController::class, 'update'])->middleware('permission:update position')->name('position.update');
+        Route::delete('/{position}', [PositionController::class, 'destroy'])->middleware('permission:delete position')->name('position.destroy');
     });
 
     // // Home/Dashboard
