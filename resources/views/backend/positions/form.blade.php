@@ -36,21 +36,6 @@
                         ) !!}
                     </div>
 
-                    <div class="col-12 col-md-4">
-                        {!! Form::label('name', 'Position Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                        {!! Form::select(
-                            'position_status',
-                            [
-                                'intern' => 'Intern',
-                                'junior' => 'Junior',
-                                'senior' => 'Senior',
-                                'lead' => 'Lead',
-                            ],
-                            old('position_status', $position->position_status),
-                            ['class' => 'form-control form-select select2'],
-                        ) !!}
-                    </div>
-
                     <div class="demo-inline-spacing">
                         {!! Form::submit($position->exists ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
                     </div>

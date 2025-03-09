@@ -276,6 +276,38 @@
 
             toastr.error(errorMessage);
         }
+
+        function requestValidationHandler(selectors) {
+            let isValid = true;
+
+            $(this).find(selectors).each(function() {
+                const value = $(this).val().trim();
+                const errorFeedback = $(this).next('.invalid-feedback');
+                if (!value) {
+                    isValid = false;
+                    $(this).addClass('is-invalid');
+                    if (errorFeedback.length === 0) {
+                        $(this).after('<div class="invalid-feedback">This field is required.</div>');
+                    }
+                } else {
+                    $(this).removeClass('is-invalid');
+                    errorFeedback.remove();
+                }
+            });
+
+            return isValid;
+        }
+
+        function getFormData(formSelector) {
+            const form = $(formSelector);
+            return {
+                url: form.attr('action'),
+                token: $('meta[name="csrf-token"]').attr('content'),
+                formData: new FormData(form[0]),
+                button: form.find('input[type="submit"], button[type="submit"]'),
+                loadingSpinner: $("#loadingSpinner")
+            };
+        }
     </script>
 </body>
 

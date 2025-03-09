@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\BranchController;
 use App\Http\Controllers\Backend\DepartmentController;
+use App\Http\Controllers\Backend\EmployeeController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\PositionController;
 use App\Http\Controllers\Backend\RoleController;
@@ -85,6 +86,17 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
         Route::get('/{position}/edit', [PositionController::class, 'edit'])->middleware('permission:update position')->name('position.edit');
         Route::put('/{position}', [PositionController::class, 'update'])->middleware('permission:update position')->name('position.update');
         Route::delete('/{position}', [PositionController::class, 'destroy'])->middleware('permission:delete position')->name('position.destroy');
+    });
+
+    // Employee routes
+    Route::group(['prefix' => 'employees'], function(){ 
+        Route::get('/', [EmployeeController::class, 'index'])->middleware('permission:view employee')->name('employee.index');
+        Route::get('/create', [EmployeeController::class, 'create'])->middleware('permission:create employee')->name('employee.create');
+        Route::post('/', [EmployeeController::class, 'store'])->middleware('permission:create employee')->name('employee.store');
+        Route::get('/{employee}', [EmployeeController::class, 'show'])->middleware('permission:view employee')->name('employee.show');
+        Route::get('/{employee}/edit', [EmployeeController::class, 'edit'])->middleware('permission:update employee')->name('employee.edit');
+        Route::put('/{employee}', [EmployeeController::class, 'update'])->middleware('permission:update employee')->name('employee.update');
+        Route::delete('/{employee}', [EmployeeController::class, 'destroy'])->middleware('permission:delete employee')->name('employee.destroy');
     });
 
     // // Home/Dashboard

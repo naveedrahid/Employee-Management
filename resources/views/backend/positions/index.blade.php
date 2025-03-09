@@ -17,7 +17,6 @@
                         <tr>
                             <th>{{ __('Position Name') }}</th>
                             <th>{{ __('Department') }}</th>
-                            <th>{{ __('Current Position') }}</th>
                             <th>{{ __('Action') }}</th>
                         </tr>
                     </thead>
@@ -26,7 +25,6 @@
                             <tr>
                                 <td>{{ $position->name }}</td>
                                 <td>{{ $position->department->name }}</td>
-                                <td>{{ $position->position_status }}</td>
                                 <td>
                                     <a class="btn btn-icon btn-primary"
                                         href="{{ route('backend.position.edit', $position->id) }}"><i

@@ -48,27 +48,6 @@
             </div>
         </div>
     </div>
-    @push('css')
-        <style>
-            div#loadingSpinner {
-                position: fixed;
-                left: 0;
-                right: 0;
-                margin: auto;
-                top: 0;
-                bottom: 0;
-                z-index: 99;
-                background: #00000036;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            div#loadingSpinner i {
-                color: #007bff;
-            }
-        </style>
-    @endpush
     @push('js')
         <script>
             $(document).ready(function() {

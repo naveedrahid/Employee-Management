@@ -100,6 +100,27 @@
                 </ul>
             </li>
         @endif
+
+        <!-- Employee Management -->
+        
+        @if (auth()->user()->can('view employee'))
+            <li
+                class="menu-item {{ request()->is('backend/employee*') ? 'active open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-building"></i>
+                    <div class="text-truncate">Employee Management</div>
+                </a>
+                <ul class="menu-sub">
+                    @can('view employee')
+                        <li class="menu-item {{ request()->is('backend/employee*') ? 'active' : '' }}">
+                            <a href="{{ route('backend.employee.index') }}" class="menu-link">
+                                <div class="text-truncate">Employees</div>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endif
     </ul>
 
 </aside>

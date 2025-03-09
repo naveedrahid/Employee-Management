@@ -36,7 +36,6 @@ class PositionController extends Controller
         $validatedData = validator($request->all(), [
             'name' => 'required|string|max:255',
             'department_id' => 'required|exists:departments,id',
-            'position_status' => 'required',
         ]);
         
         if ($validatedData->fails()) {
@@ -46,7 +45,6 @@ class PositionController extends Controller
         $position = new Position();
         $position->name = $request->name;
         $position->department_id = $request->department_id;
-        $position->position_status = $request->position_status;
         $position->save();
 
         return response()->json(['message' => 'Position created successfully', 200]);
@@ -77,7 +75,6 @@ class PositionController extends Controller
         $validatedData = validator($request->all(), [
             'name' => 'required|string|max:255',
             'department_id' => 'required|exists:departments,id',
-            'position_status' => 'required',
         ]);
         
         if ($validatedData->fails()) {
@@ -86,7 +83,6 @@ class PositionController extends Controller
 
         $position->name = $request->name;
         $position->department_id = $request->department_id;
-        $position->position_status = $request->position_status;
 
         $position->save();
 
