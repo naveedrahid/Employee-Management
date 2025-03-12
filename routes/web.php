@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\BankDetailController;
 use App\Http\Controllers\Backend\BranchController;
 use App\Http\Controllers\Backend\DepartmentController;
 use App\Http\Controllers\Backend\EmployeeController;
@@ -97,6 +98,17 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
         Route::get('/{employee}/edit', [EmployeeController::class, 'edit'])->middleware('permission:update employee')->name('employee.edit');
         Route::put('/{employee}', [EmployeeController::class, 'update'])->middleware('permission:update employee')->name('employee.update');
         Route::delete('/{employee}', [EmployeeController::class, 'destroy'])->middleware('permission:delete employee')->name('employee.destroy');
+    });
+
+    // Bank Details routes
+    Route::group(['prefix' => 'bank-details'], function(){ 
+        Route::get('/', [BankDetailController::class, 'index'])->middleware('permission:view bank_detail')->name('bank_detail.index');
+        Route::get('/create', [BankDetailController::class, 'create'])->middleware('permission:create bank_detail')->name('bank_detail.create');
+        Route::post('/', [BankDetailController::class, 'store'])->middleware('permission:create bank_detail')->name('bank_detail.store');
+        Route::get('/{bank_detail}', [BankDetailController::class, 'show'])->middleware('permission:view bank_detail')->name('bank_detail.show');
+        Route::get('/{bank_detail}/edit', [BankDetailController::class, 'edit'])->middleware('permission:update bank_detail')->name('bank_detail.edit');
+        Route::put('/{bank_detail}', [BankDetailController::class, 'update'])->middleware('permission:update bank_detail')->name('bank_detail.update');
+        Route::delete('/{bank_detail}', [BankDetailController::class, 'destroy'])->middleware('permission:delete bank_detail')->name('bank_detail.destroy');
     });
 
     // // Home/Dashboard
