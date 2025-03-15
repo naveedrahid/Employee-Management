@@ -103,9 +103,9 @@
 
         <!-- Employee Management -->
         
-        @if (auth()->user()->can('view employee'))
+        @if (auth()->user()->can('view employee') || auth()->user()->can('view bank_detail'))
             <li
-                class="menu-item {{ request()->is('backend/employee*') ? 'active open' : '' }}">
+                class="menu-item {{ request()->is('backend/employee*') || request()->is('backend/bank-details*') ? 'active open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-building"></i>
                     <div class="text-truncate">Employee Management</div>
@@ -115,6 +115,13 @@
                         <li class="menu-item {{ request()->is('backend/employee*') ? 'active' : '' }}">
                             <a href="{{ route('backend.employee.index') }}" class="menu-link">
                                 <div class="text-truncate">Employees</div>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('view bank_detail')
+                        <li class="menu-item {{ request()->is('backend/bank-details*') ? 'active' : '' }}">
+                            <a href="{{ route('backend.bank_detail.index') }}" class="menu-link">
+                                <div class="text-truncate">Bank Details</div>
                             </a>
                         </li>
                     @endcan

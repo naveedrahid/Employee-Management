@@ -17,10 +17,13 @@ return new class extends Migration
             $table->foreignId('bank_detail_id')->nullable()->constrained()->onDelete('set null');
             $table->decimal('basic_salary', 10, 2);
             $table->decimal('allowance', 10, 2)->default(0);
+            $table->string('allowance_name')->nullable();
             $table->decimal('deduction', 10, 2)->default(0);
             $table->decimal('net_salary', 10, 2);
             $table->date('payment_date')->nullable();
             $table->enum('payment_method', ['bank', 'cash', 'cheque']);
+            $table->enum('commission_type', ['fixed', 'percentage', 'none'])->nullable();
+            $table->decimal('commission', 10, 2)->nullable();
             $table->string('transaction_id')->nullable();
             $table->enum('payment_status', ['pending', 'paid', 'unpaid'])->default('pending');
             $table->text('notes')->nullable();

@@ -4,11 +4,13 @@ use App\Http\Controllers\Backend\BankDetailController;
 use App\Http\Controllers\Backend\BranchController;
 use App\Http\Controllers\Backend\DepartmentController;
 use App\Http\Controllers\Backend\EmployeeController;
+use App\Http\Controllers\Backend\LeaveController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\PositionController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LeaveTypeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -109,6 +111,27 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
         Route::get('/{bank_detail}/edit', [BankDetailController::class, 'edit'])->middleware('permission:update bank_detail')->name('bank_detail.edit');
         Route::put('/{bank_detail}', [BankDetailController::class, 'update'])->middleware('permission:update bank_detail')->name('bank_detail.update');
         Route::delete('/{bank_detail}', [BankDetailController::class, 'destroy'])->middleware('permission:delete bank_detail')->name('bank_detail.destroy');
+    });
+
+    // Leave Type routes
+    Route::group(['prefix' => 'leave-types'], function(){ 
+        Route::get('/', [LeaveTypeController::class, 'index'])->middleware('permission:view leave_type')->name('leave_type.index');
+        Route::get('/create', [LeaveTypeController::class, 'create'])->middleware('permission:create leave_type')->name('leave_type.create');
+        Route::post('/', [LeaveTypeController::class, 'store'])->middleware('permission:create leave_type')->name('leave_type.store');
+        Route::get('/{leave_type}/edit', [LeaveTypeController::class, 'edit'])->middleware('permission:update leave_type')->name('leave_type.edit');
+        Route::put('/{leave_type}', [LeaveTypeController::class, 'update'])->middleware('permission:update leave_type')->name('leave_type.update');
+        Route::delete('/{leave_type}', [LeaveTypeController::class, 'destroy'])->middleware('permission:delete leave_type')->name('leave_type.destroy');
+    });
+
+    // Leave routes
+    Route::group(['prefix' => 'leaves'], function(){ 
+        Route::get('/', [LeaveController::class, 'index'])->middleware('permission:view leave')->name('leave.index');
+        Route::get('/create', [LeaveController::class, 'create'])->middleware('permission:create leave')->name('leave.create');
+        Route::post('/', [LeaveController::class, 'store'])->middleware('permission:create leave')->name('leave.store');
+        // Route::get('/{leave}', [LeaveController::class, 'show'])->middleware('permission:view leave')->name('leave.show');
+        Route::get('/{leave}/edit', [LeaveController::class, 'edit'])->middleware('permission:update leave')->name('leave.edit');
+        Route::put('/{leave}', [LeaveController::class, 'update'])->middleware('permission:update leave')->name('leave.update');
+        Route::delete('/{leave}', [LeaveController::class, 'destroy'])->middleware('permission:delete leave')->name('leave.destroy');
     });
 
     // // Home/Dashboard

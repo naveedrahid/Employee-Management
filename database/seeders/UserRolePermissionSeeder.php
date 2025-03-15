@@ -213,7 +213,7 @@ class UserRolePermissionSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
 
-            /* permissions employees */
+            /* permissions Bank Details */
 
             [
                 'name' => 'view bank_detail',
@@ -235,6 +235,60 @@ class UserRolePermissionSeeder extends Seeder
             ],
             [
                 'name' => 'delete bank_detail',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+
+            /* permissions Leave Type */
+
+            [
+                'name' => 'view leave_type',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'create leave_type',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'update leave_type',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'delete leave_type',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+
+            /* permissions Leaves */
+
+            [
+                'name' => 'view leave',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'create leave',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'update leave',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'delete leave',
                 'guard_name' => 'web',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
