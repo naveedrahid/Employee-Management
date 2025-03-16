@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\DepartmentController;
 use App\Http\Controllers\Backend\EmployeeController;
 use App\Http\Controllers\Backend\EmployeeSalaryController;
 use App\Http\Controllers\Backend\LeaveController;
+use App\Http\Controllers\Backend\PayrollController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\PositionController;
 use App\Http\Controllers\Backend\RoleController;
@@ -142,6 +143,16 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
         Route::get('/{employee_salary}/edit', [EmployeeSalaryController::class, 'edit'])->middleware('permission:update employee_salary')->name('employee_salary.edit');
         Route::put('/{employee_salary}', [EmployeeSalaryController::class, 'update'])->middleware('permission:update employee_salary')->name('employee_salary.update');
         Route::delete('/{employee_salary}', [EmployeeSalaryController::class, 'destroy'])->middleware('permission:delete employee_salary')->name('employee_salary.destroy');
+    });
+
+    // Payroll routes
+    Route::group(['prefix' => 'payrolls'], function(){ 
+        Route::get('/', [PayrollController::class, 'index'])->middleware('permission:view payroll')->name('payroll.index');
+        Route::get('/create', [PayrollController::class, 'create'])->middleware('permission:create payroll')->name('payroll.create');
+        Route::post('/', [PayrollController::class, 'store'])->middleware('permission:create payroll')->name('payroll.store');
+        Route::get('/{payroll}/edit', [PayrollController::class, 'edit'])->middleware('permission:update payroll')->name('payroll.edit');
+        Route::put('/{payroll}', [PayrollController::class, 'update'])->middleware('permission:update payroll')->name('payroll.update');
+        Route::delete('/{payroll}', [PayrollController::class, 'destroy'])->middleware('permission:delete payroll')->name('payroll.destroy');
     });
 
     // // Home/Dashboard
