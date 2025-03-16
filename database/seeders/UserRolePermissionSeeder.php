@@ -294,6 +294,33 @@ class UserRolePermissionSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
 
+            /* permissions Employee Salary */
+
+            [
+                'name' => 'view employee_salary',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'create employee_salary',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'update employee_salary',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'delete employee_salary',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+
             /* permissions dashboard */
 
             [

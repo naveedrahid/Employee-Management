@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('salaries', function (Blueprint $table) {
+        Schema::create('payrolls', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')->constrained()->onDelete('cascade');
             $table->foreignId('bank_detail_id')->nullable()->constrained()->onDelete('set null');
@@ -22,7 +22,6 @@ return new class extends Migration
             $table->decimal('net_salary', 10, 2);
             $table->date('payment_date')->nullable();
             $table->enum('payment_method', ['bank', 'cash', 'cheque']);
-            $table->enum('commission_type', ['fixed', 'percentage', 'none'])->nullable();
             $table->decimal('commission', 10, 2)->nullable();
             $table->string('transaction_id')->nullable();
             $table->enum('payment_status', ['pending', 'paid', 'unpaid'])->default('pending');
@@ -37,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('salaries');
+        Schema::dropIfExists('payrolls');
     }
 };

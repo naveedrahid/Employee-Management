@@ -29,10 +29,6 @@ class Employee extends Model
         return $this->hasMany(Attendance::class);
     }
 
-    public function salary(){
-        return $this->hasOne(Salary::class);
-    }
-
     public function bankDetails()
     {
         return $this->hasOne(BankDetail::class);
@@ -76,4 +72,8 @@ class Employee extends Model
         return $this->belongsTo(Country::class);
     }
 
+    public function salary()
+    {
+        return $this->hasOne(EmployeeSalary::class);
+    }
 }

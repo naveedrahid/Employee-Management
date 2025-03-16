@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\BankDetailController;
 use App\Http\Controllers\Backend\BranchController;
 use App\Http\Controllers\Backend\DepartmentController;
 use App\Http\Controllers\Backend\EmployeeController;
+use App\Http\Controllers\Backend\EmployeeSalaryController;
 use App\Http\Controllers\Backend\LeaveController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\PositionController;
@@ -128,10 +129,19 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
         Route::get('/', [LeaveController::class, 'index'])->middleware('permission:view leave')->name('leave.index');
         Route::get('/create', [LeaveController::class, 'create'])->middleware('permission:create leave')->name('leave.create');
         Route::post('/', [LeaveController::class, 'store'])->middleware('permission:create leave')->name('leave.store');
-        // Route::get('/{leave}', [LeaveController::class, 'show'])->middleware('permission:view leave')->name('leave.show');
         Route::get('/{leave}/edit', [LeaveController::class, 'edit'])->middleware('permission:update leave')->name('leave.edit');
         Route::put('/{leave}', [LeaveController::class, 'update'])->middleware('permission:update leave')->name('leave.update');
         Route::delete('/{leave}', [LeaveController::class, 'destroy'])->middleware('permission:delete leave')->name('leave.destroy');
+    });
+
+    // Employee Salary routes
+    Route::group(['prefix' => 'employee-salaries'], function(){ 
+        Route::get('/', [EmployeeSalaryController::class, 'index'])->middleware('permission:view employee_salary')->name('employee_salary.index');
+        Route::get('/create', [EmployeeSalaryController::class, 'create'])->middleware('permission:create employee_salary')->name('employee_salary.create');
+        Route::post('/', [EmployeeSalaryController::class, 'store'])->middleware('permission:create employee_salary')->name('employee_salary.store');
+        Route::get('/{employee_salary}/edit', [EmployeeSalaryController::class, 'edit'])->middleware('permission:update employee_salary')->name('employee_salary.edit');
+        Route::put('/{employee_salary}', [EmployeeSalaryController::class, 'update'])->middleware('permission:update employee_salary')->name('employee_salary.update');
+        Route::delete('/{employee_salary}', [EmployeeSalaryController::class, 'destroy'])->middleware('permission:delete employee_salary')->name('employee_salary.destroy');
     });
 
     // // Home/Dashboard

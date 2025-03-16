@@ -103,9 +103,9 @@
 
         <!-- Employee Management -->
         
-        @if (auth()->user()->can('view employee') || auth()->user()->can('view bank_detail'))
+        @if (auth()->user()->can('view employee') || auth()->user()->can('view bank_detail') || auth()->user()->can('view leave_type'))
             <li
-                class="menu-item {{ request()->is('backend/employee*') || request()->is('backend/bank-details*') ? 'active open' : '' }}">
+                class="menu-item {{ request()->is('backend/employee*') || request()->is('backend/bank-details*') || request()->is('backend/leave-types*') ? 'active open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-building"></i>
                     <div class="text-truncate">Employee Management</div>
@@ -122,6 +122,34 @@
                         <li class="menu-item {{ request()->is('backend/bank-details*') ? 'active' : '' }}">
                             <a href="{{ route('backend.bank_detail.index') }}" class="menu-link">
                                 <div class="text-truncate">Bank Details</div>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('view leave_type')
+                        <li class="menu-item {{ request()->is('backend/leave-types*') ? 'active' : '' }}">
+                            <a href="{{ route('backend.leave_type.index') }}" class="menu-link">
+                                <div class="text-truncate">{{ __('Leave Types') }}</div>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endif
+
+        <!-- Salary Management -->
+        
+        @if (auth()->user()->can('view employee_salary'))
+            <li
+                class="menu-item {{ request()->is('backend/employee-salaries*') ? 'active open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-building"></i>
+                    <div class="text-truncate">{{ __('Payroll') }}</div>
+                </a>
+                <ul class="menu-sub">
+                    @can('view employee_salary')
+                        <li class="menu-item {{ request()->is('backend/employee-salaries*') ? 'active' : '' }}">
+                            <a href="{{ route('backend.employee_salary.index') }}" class="menu-link">
+                                <div class="text-truncate">{{ __('Salaries') }}</div>
                             </a>
                         </li>
                     @endcan
