@@ -169,6 +169,12 @@
                         },
                     })
                     .done(function(response){
+                        if (self.attr('id') === 'leaveTypeCreate') {
+                            self.trigger('reset');
+                            self.find('select').each(function () {
+                                $(this).val($(this).find('option:first').val()).trigger('change');
+                            });
+                        }
                         toastr.success(response.message);
                         loadingSpinner.hide();
                         button.prop('disabled', false);

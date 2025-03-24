@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\AttendanceController;
 use App\Http\Controllers\Backend\BankDetailController;
 use App\Http\Controllers\Backend\BranchController;
 use App\Http\Controllers\Backend\DepartmentController;
@@ -11,8 +12,8 @@ use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\PositionController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\LeaveTypeController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LeaveTypeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -153,6 +154,18 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
         Route::get('/{payroll}/edit', [PayrollController::class, 'edit'])->middleware('permission:update payroll')->name('payroll.edit');
         Route::put('/{payroll}', [PayrollController::class, 'update'])->middleware('permission:update payroll')->name('payroll.update');
         Route::delete('/{payroll}', [PayrollController::class, 'destroy'])->middleware('permission:delete payroll')->name('payroll.destroy');
+    });
+
+    // Attendance routes
+    Route::group(['prefix' => 'attendances'], function(){ 
+        Route::post('/check-in', [AttendanceController::class, 'checkIn'])->middleware('permission:create check_in')->name('attendance.checkIn');
+        Route::post('/check-out', [AttendanceController::class, 'checkOut'])->middleware('permission:create check_out')->name('attendance.checkOut');
+        Route::get('/', [AttendanceController::class, 'index'])->middleware('permission:view attendance')->name('attendance.index');
+        // Route::get('/create', [AttendanceController::class, 'create'])->middleware('permission:create attendance')->name('attendance.create');
+        // Route::post('/', [AttendanceController::class, 'store'])->middleware('permission:create attendance')->name('attendance.store');
+        // Route::get('/{attendance}/edit', [AttendanceController::class, 'edit'])->middleware('permission:update attendance')->name('attendance.edit');
+        // Route::put('/{attendance}', [AttendanceController::class, 'update'])->middleware('permission:update attendance')->name('attendance.update');
+        // Route::delete('/{attendance}', [AttendanceController::class, 'destroy'])->middleware('permission:delete attendance')->name('attendance.destroy');
     });
 
     // // Home/Dashboard

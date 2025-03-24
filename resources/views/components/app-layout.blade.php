@@ -126,9 +126,11 @@
                             </a>
                         </div>
 
-                        <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+                        <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
 
-                            <ul class="navbar-nav flex-row align-items-center ms-md-auto">
+                            <ul class="navbar-nav flex-row align-items-center justify-content-between w-100">
+                                <x-check-in />
+                                <x-check-out />
                                 <!-- User -->
                                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                     <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);"
@@ -213,7 +215,6 @@
     <!-- / Layout wrapper -->
 
     <!-- Core JS -->
-
     <script src="{{ asset('admin/assets/vendor/libs/jquery/jquery.js') }}"></script>
 
     <script src="{{ asset('admin/assets/vendor/libs/popper/popper.js') }}"></script>

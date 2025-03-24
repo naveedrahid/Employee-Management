@@ -66,6 +66,7 @@
                     const token = $('meta[name="csrf-token"]').attr('content');
                     const loadingSpinner = $('#loadingSpinner');
                     const button = form.find('input[type="submit"]');
+                    button.prop('disabled', true);
                     
                     loadingSpinner.show();
 
@@ -80,6 +81,13 @@
                         },
                     })
                     .done(function(response) {
+                        if (form.attr('id') === 'salaryCreate') {
+                            form[0].reset();
+                            form.find('select').each(function() {
+                                $(this).val($(this).find('option:first').val()).trigger('change');
+                            });
+                        }
+
                         toastr.success(response.message);
                         loadingSpinner.hide();
                         button.prop('disabled', false);
