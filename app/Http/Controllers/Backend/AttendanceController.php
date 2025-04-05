@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
+use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,8 @@ class AttendanceController extends Controller
 {
     public function index()
     {
-        return view('backend.attendances.index');
+        $attendances = Attendance::all();
+        return view('backend.attendances.index', compact('attendances'));
     }
 
     //     public function create()
@@ -78,6 +80,42 @@ class AttendanceController extends Controller
             'message' => 'You have successfully checked out',
             'attendance' => $attendance,
         ], 200);
+    }
+
+    public function show(Request $request)
+    {
+        $month = $request->query('month', Carbon::now()->month);
+        $year = $request->query('year', Carbon::now()->year);
+
+        $dates = $this->generateDates($month, $year);
+        $statuses = [];
+        $checkIns = [];
+        $checkOuts = [];
+
+        $attendance = Attendance::whereMonth('date', $month)
+            ->whereYear('date', $year)
+            ->get();
+
+        foreach ($attendance as $att) {
+            $statuses[$att->date] = 'Present';
+            $checkIns[$att->date] = $att->check_in ?? '-';
+            $checkOuts[$att->date] = $att->check_out ?? '-';
+        }
+
+        return view('backend.attendances.show', compact('month', 'year', 'dates', 'statuses', 'checkIns', 'checkOuts'));
+    }
+
+    private function generateDates($month, $year)
+    {
+        $dates = [];
+        $start = Carbon::create($year, $month, 1);
+        $daysInMonth = $start->daysInMonth;
+
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $dates[] = $start->copy()->day($day)->toDateString();
+        }
+
+        return $dates;
     }
 
     // public function edit(Attendance $attendance)

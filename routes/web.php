@@ -161,6 +161,7 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
         Route::post('/check-in', [AttendanceController::class, 'checkIn'])->middleware('permission:create check_in')->name('attendance.checkIn');
         Route::post('/check-out', [AttendanceController::class, 'checkOut'])->middleware('permission:create check_out')->name('attendance.checkOut');
         Route::get('/', [AttendanceController::class, 'index'])->middleware('permission:view attendance')->name('attendance.index');
+        Route::get('/{attendance}', [AttendanceController::class, 'show'])->middleware('permission:view attendance')->name('attendance.show');
         // Route::get('/create', [AttendanceController::class, 'create'])->middleware('permission:create attendance')->name('attendance.create');
         // Route::post('/', [AttendanceController::class, 'store'])->middleware('permission:create attendance')->name('attendance.store');
         // Route::get('/{attendance}/edit', [AttendanceController::class, 'edit'])->middleware('permission:update attendance')->name('attendance.edit');

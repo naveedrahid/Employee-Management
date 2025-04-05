@@ -1,4 +1,4 @@
-@if ($checkIn)
+@if (empty($checkIn))
     <li class="nav-item check_in_check_out"><a href="{{ route('backend.attendance.checkIn') }}" id="checkIn"
             class="btn btn-primary m-0">{{ __('Check In') }}</a></li>
 @endif
