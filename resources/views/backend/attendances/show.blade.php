@@ -1,12 +1,12 @@
 @section('title', 'Attendance Report')
-
-<x-app-layout>
-    <x-calendar-grid 
-        :month="$month" 
-        :year="$year" 
-        :dates="$dates" 
-        :statuses="$statuses" 
-        :checkIns="$checkIns" 
-        :checkOuts="$checkOuts" 
+{{-- @dd($attendances) --}}
+    {{-- <h2>{{ $attendances->first()?->employee?->user?->name }} - Attendance</h2> --}}
+    <x-app-layout>
+        <x-calendar-grid
+        :month="$month"
+        :year="$year"
+        :dates="$dates"
+        :grouped="$grouped"
     />
-</x-app-layout>
+    </x-app-layout>
+

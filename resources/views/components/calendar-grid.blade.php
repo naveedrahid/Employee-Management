@@ -4,6 +4,7 @@
     <table class="table table-bordered text-center">
         <thead>
             <tr>
+                <th>Employee</th>
                 <th>Date</th>
                 <th>Status</th>
                 <th>Check-In</th>
@@ -11,13 +12,19 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($dates as $date)
-                <tr>
-                    <td>{{ \Carbon\Carbon::parse($date)->format('d M Y (D)') }}</td>
-                    <td>{{ $statuses[$date] ?? 'Absent' }}</td>
-                    <td>{{ $checkIns[$date] ?? 'N/A' }}</td>
-                    <td>{{ $checkOuts[$date] ?? 'N/A' }}</td>
-                </tr>
+            @foreach ($grouped as $employeeId => $data)
+                @foreach ($dates as $date)
+                    @php
+                        $record = $data['records'][$date] ?? null;
+                    @endphp
+                    <tr>
+                        <td>{{ $data['name'] }}</td>
+                        <td>{{ \Carbon\Carbon::parse($date)->format('d M Y (D)') }}</td>
+                        <td>{{ $record['status'] ?? 'Absent' }}</td>
+                        <td>{{ $record['check_in'] ?? '-' }}</td>
+                        <td>{{ $record['check_out'] ?? '-' }}</td>
+                    </tr>
+                @endforeach
             @endforeach
         </tbody>
     </table>

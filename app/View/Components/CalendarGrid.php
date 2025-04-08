@@ -9,24 +9,17 @@ use Illuminate\View\Component;
 
 class CalendarGrid extends Component
 {
-    /**
-     * Create a new component instance.
-     */
     public $month;
     public $year;
     public $dates;
-    public $statuses;
-    public $checkIns;
-    public $checkOuts;
+    public $grouped;
 
-    public function __construct($month, $year, $dates, $statuses = [], $checkIns = [], $checkOuts = [])
+    public function __construct($month, $year, $dates, $grouped)
     {
         $this->month = $month;
         $this->year = $year;
         $this->dates = $dates;
-        $this->statuses = $statuses;
-        $this->checkIns = $checkIns;
-        $this->checkOuts = $checkOuts;
+        $this->grouped = $grouped;
     }
 
     public function render()

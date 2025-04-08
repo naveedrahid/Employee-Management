@@ -13,8 +13,8 @@ class AttendanceController extends Controller
 {
     public function index()
     {
-        $attendances = Attendance::all();
-        return view('backend.attendances.index', compact('attendances'));
+        $employees = Employee::with('user:id,name')->get();
+        return view('backend.attendances.index', compact('employees'));
     }
 
     //     public function create()
@@ -82,28 +82,37 @@ class AttendanceController extends Controller
         ], 200);
     }
 
-    public function show(Request $request)
+    public function show(Request $request, $id)
     {
         $month = $request->query('month', Carbon::now()->month);
         $year = $request->query('year', Carbon::now()->year);
-
+    
         $dates = $this->generateDates($month, $year);
-        $statuses = [];
-        $checkIns = [];
-        $checkOuts = [];
-
-        $attendance = Attendance::whereMonth('date', $month)
+    
+        // Get specific employee attendance only
+        $attendances = Attendance::with('employee.user:id,name')
+            ->where('employee_id', $id)
+            ->whereMonth('date', $month)
             ->whereYear('date', $year)
             ->get();
-
-        foreach ($attendance as $att) {
-            $statuses[$att->date] = 'Present';
-            $checkIns[$att->date] = $att->check_in ?? '-';
-            $checkOuts[$att->date] = $att->check_out ?? '-';
+    
+        $grouped = [];
+    
+        foreach ($attendances as $att) {
+            $employeeId = $att->employee_id;
+            $employeeName = $att->employee?->user?->name ?? 'N/A';
+            $date = $att->date;
+    
+            $grouped[$employeeId]['name'] = $employeeName;
+            $grouped[$employeeId]['records'][$date] = [
+                'status' => 'Present',
+                'check_in' => $att->check_in ? Carbon::parse($att->check_in)->format('H:i') : 'N/A',
+                'check_out' => $att->check_out ? Carbon::parse($att->check_out)->format('H:i') : 'N/A',
+            ];
         }
-
-        return view('backend.attendances.show', compact('month', 'year', 'dates', 'statuses', 'checkIns', 'checkOuts'));
-    }
+    
+        return view('backend.attendances.show', compact('month', 'year', 'dates', 'grouped'));
+    }    
 
     private function generateDates($month, $year)
     {
@@ -112,12 +121,11 @@ class AttendanceController extends Controller
         $daysInMonth = $start->daysInMonth;
 
         for ($day = 1; $day <= $daysInMonth; $day++) {
-            $dates[] = $start->copy()->day($day)->toDateString();
+            $dates[] = Carbon::create($year, $month, $day)->toDateString();
         }
 
         return $dates;
     }
-
     // public function edit(Attendance $attendance)
     // {
     //     return view('backend.attendances.form');
