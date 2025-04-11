@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id')->constrained()->onDelete('cascade');
             $table->foreignId('leave_type_id')->constrained()->onDelete('cascade');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->enum('leave_status', ['full day', 'half day', 'many days'])->default('full day');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->integer('total_days');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->text('reason')->nullable();

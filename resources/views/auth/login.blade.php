@@ -9,19 +9,16 @@
                         <div class="card px-sm-6 px-0">
                             <div class="card-body">
                                 <!-- Logo -->
-                                <div class="app-brand justify-content-center">
+                                <div class="app-brand justify-content-center mb-5 text-center">
                                     <a href="javascript:void(0);" class="app-brand-link gap-2">
                                         <span class="app-brand-logo demo">
                                             <span class="text-primary">
-                                                <img src="{{ asset('admin/img/logo.png') }}" width="25" class="img-fluid" alt="">
+                                                <img src="{{ asset('admin/img/logo.png') }}" class="img-fluid w-25" alt="">
                                             </span>
                                         </span>
-                                        <span class="app-brand-text demo text-heading fw-bold">{{ __('Sneat') }}</span>
                                     </a>
                                 </div>
                                 <!-- /Logo -->
-                                <h4 class="mb-1">{{ __('Welcome to Sneat!') }} 👋</h4>
-                                <p class="mb-6">{{ __('Please sign-in to your account and start the adventure') }}</p>
         
                                 <form id="formAuthentication" class="mb-6" action="{{ route('login') }}" method="POST">
                                     @csrf

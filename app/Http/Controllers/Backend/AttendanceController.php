@@ -13,8 +13,11 @@ class AttendanceController extends Controller
 {
     public function index()
     {
-        $employees = Employee::with('user:id,name')->get();
-        return view('backend.attendances.index', compact('employees'));
+        $employees = Employee::whereHas('attendances') // sirf wo jinke attendance hain
+        ->with('user:id,name') // user ka sirf id aur name
+        ->get();
+
+    return view('backend.attendances.index', compact('employees'));
     }
 
     //     public function create()
@@ -112,7 +115,7 @@ class AttendanceController extends Controller
         }
     
         return view('backend.attendances.show', compact('month', 'year', 'dates', 'grouped'));
-    }    
+    }
 
     private function generateDates($month, $year)
     {

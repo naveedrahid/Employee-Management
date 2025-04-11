@@ -256,6 +256,28 @@
     @stack('js')
 
     <script>
+        // function handleAjaxError(xhr) {
+        //     console.error("Request failed:", xhr);
+        //     let errorMessage = "Something went wrong! Please try again.";
+
+        //     if (xhr.responseJSON) {
+        //         if (xhr.responseJSON.errors) {
+        //             $.each(xhr.responseJSON.errors, function(key, messages) {
+        //                 messages.forEach(function(message) {
+        //                     toastr.error(message);
+        //                 });
+        //             });
+        //             return;
+        //         } else if (xhr.responseJSON.message) {
+        //             errorMessage = xhr.responseJSON.message;
+        //         }
+        //     } else if (xhr.responseText) {
+        //         errorMessage = xhr.responseText;
+        //     }
+
+        //     toastr.error(errorMessage);
+        // }
+
         function handleAjaxError(xhr) {
             console.error("Request failed:", xhr);
             let errorMessage = "Something went wrong! Please try again.";
@@ -268,6 +290,8 @@
                         });
                     });
                     return;
+                } else if (xhr.responseJSON.error) {
+                    errorMessage = xhr.responseJSON.error;
                 } else if (xhr.responseJSON.message) {
                     errorMessage = xhr.responseJSON.message;
                 }
@@ -277,6 +301,7 @@
 
             toastr.error(errorMessage);
         }
+
 
         function requestValidationHandler(selectors) {
             let isValid = true;
