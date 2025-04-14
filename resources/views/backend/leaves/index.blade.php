@@ -15,33 +15,54 @@
                 <table class="table table-striped">
                     <thead class="table-light">
                         <tr>
-                            <th>{{ __('Name') }}</th>
-                            {{-- <th>{{ __('Slect Type') }}</th>
-                            <th>{{ __('Leave Status') }}</th>
-                            <th>{{ __('Start Date') }}</th>
-                            <th>{{ __('End Date') }}</th>
-                            <th>{{ __('Days') }}</th>
-                            <th>{{ __('status') }}</th>
-                            <th>{{ __('Reason') }}</th>
-                            <th>{{ __('Action') }}</th> --}}
+                            <th width="20%">{{ __('Name') }}</th>
+                            <th width="10%">{{ __('Start Date') }}</th>
+                            <th width="10%">{{ __('End Date') }}</th>
+                            <th width="5%">{{ __('Days') }}</th>
+                            <th width="10%">{{ __('status') }}</th>
+                            <th width="35%">{{ __('Reason') }}</th>
+                            @if (auth()->user()->hasRole('super-admin'))
+                                <th width="10%">{{ __('Action') }}</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                         @forelse ($leaves as $leave)
                             <tr>
-                                <td>{{ $leave->employee->user->name }}</td>
-                                <td>{{ $leave->status }}</td>
-                                {{-- <td>{{ $leave->branch->name }}</td>
-                                <td>{{ $leave->country->name }}</td>
-                                <td>{{ $leave->city->name }}</td> --}}
                                 <td>
-                                    <a class="btn btn-icon btn-primary"
-                                        href="{{ route('backend.leave.edit', $leave->id) }}"><i
-                                            class="icon-base bx bx-edit-alt text-white"></i></a>
-                                    <a class="btn btn-icon btn-danger deleteRow"
-                                        href="{{ route('backend.leave.destroy', $leave->id) }}"><i
-                                            class="icon-base bx bx-trash text-white"></i></a>
+                                    <p><strong>{{ $leave->employee->user->name ?? '' }}</strong></p>
+                                    <p class="m-0"><strong><small>Slect Type</small></strong>:
+                                        <small>{{ $leave->leaveType->category ?? '' }}</small></p>
+                                    <p class="m-0"><strong><small>Leave Status</small></strong>:
+                                        <small>{{ $leave->leave_status ?? '' }}</small></p>
                                 </td>
+                                <td>{{ $leave->start_date ?? '' }}</td>
+                                <td>{{ $leave->end_date ?? '' }}</td>
+                                <td>{{ $leave->total_days ?? '' }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-{{ $leave->status == 'rejected' ? 'danger' : ($leave->status == 'approved' ? 'success' : 'warning') }} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ ucfirst($leave->status) }}
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item change-status" href="javascript:void(0);" data-id="{{ $leave->id }}" data-status="approved">Approve</a></li>
+                                            <li><a class="dropdown-item change-status" href="javascript:void(0);" data-id="{{ $leave->id }}" data-status="rejected">Reject</a></li>
+                                        </ul>
+                                    </div>
+                                </td>                                
+                                <td>
+                                    <p>{{ $leave->reason }}</p>
+                                </td>
+                                @if (auth()->user()->hasRole('super-admin'))
+                                    <td>
+                                        <a class="btn btn-icon btn-primary"
+                                            href="{{ route('backend.leave.edit', $leave->id) }}"><i
+                                                class="icon-base bx bx-edit-alt text-white"></i></a>
+                                        <a class="btn btn-icon btn-danger deleteRow"
+                                            href="{{ route('backend.leave.destroy', $leave->id) }}"><i
+                                                class="icon-base bx bx-trash text-white"></i></a>
+                                    </td>
+                                @endif
                             </tr>
                         @empty
                             <tr>
@@ -53,4 +74,48 @@
             </div>
         </div>
     </div>
+    @push('js')
+        <script>
+            $(function () {
+                $(document).on('click', '.change-status', function () {
+
+                    const leaveId = $(this).data('id');
+                    const status = $(this).data('status');
+                    const loading = $('#loadingSpinner');
+                    const button = $(this).closest('.btn-group').find('.dropdown-toggle');
+                    
+                    button.prop('disabled', true);
+                    loading.show();
+                    
+                    $.ajax({
+                        url: '/backend/leaves/' + leaveId + '/change-status',
+                        method: "POST",
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            status: status
+                        },
+                    })
+                    .done(function (response) {   
+                        if (response.status === 'approved') {
+                            button.removeClass('btn-warning').addClass('btn-success').text('Approved');
+                        } else if (response.status === 'rejected') {
+                            button.removeClass('btn-warning').addClass('btn-danger').text('Rejected');
+                        }                     
+                        loading.hide();
+                        button.prop('disabled', false);
+                        toastr.success(response.message);
+                        
+                    })
+                    .fail(function (xhr) {
+                        loading.hide();
+                        handleAjaxError(xhr);
+                    })
+                    .always(function () {
+                        loading.hide();
+                        button.prop('disabled', false);
+                    });
+                });
+            });
+        </script>
+    @endpush
 </x-app-layout>

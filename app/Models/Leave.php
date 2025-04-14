@@ -12,6 +12,10 @@ class Leave extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'total_days' => 'integer',
+    ];
+
     public function employee()
     {
         return $this->belongsTo(Employee::class);

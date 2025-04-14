@@ -24,16 +24,19 @@
                         @if (auth()->user()->hasRole('super-admin'))
                             {!! Form::select(
                                 'employee_id',
-                                ['' => 'Select Type'] + $users->pluck('name', 'id')->toArray(),
+                                ['' => 'Select Type'] +
+                                    $users->mapWithKeys(function ($employee) {
+                                            return [$employee->id => $employee->user->name ?? ''];
+                                        })->toArray(),
                                 old('employee_id', $leave->employee_id),
                                 [
                                     'class' => 'form-control form-select select2',
-                                    'required' => true
+                                    'required' => true,
                                 ],
                             ) !!}
                         @else
-                            {!! Form::hidden('employee_id', $users->first()?->id) !!}
-                            {!! Form::text('employee_id', auth()->user()->name, ['class' => 'form-control', 'readonly']) !!}
+                            {!! Form::hidden('employee_id', auth()->user()->id) !!}
+                            {!! Form::text('employee_name', auth()->user()->name, ['class' => 'form-control', 'readonly']) !!}
                         @endif
                     </div>
 
@@ -50,7 +53,7 @@
                             [
                                 'class' => 'form-control form-select select2',
                                 'id' => 'leave_status',
-                                'required' => true
+                                'required' => true,
                             ],
                         ) !!}
                     </div>
@@ -63,14 +66,14 @@
                             old('leave_type_id', $leave->leave_type_id),
                             [
                                 'class' => 'form-control form-select select2',
-                                'required' => true
+                                'required' => true,
                             ],
                         ) !!}
                     </div>
 
                     <div class="col-12 mb-3 col-md-3 " id="start_date_col">
                         {!! Form::label('name', 'Start Date', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                        {!! Form::date('start_date', old('start_date', $leave->start_date), [
+                        {!! Form::date('start_date', old('start_date',$leave->start_date), [
                             'class' => 'form-control',
                             'id' => 'start_date',
                         ]) !!}
@@ -86,37 +89,39 @@
 
                     <div class="col-12 mb-3 col-md-3">
                         {!! Form::label('name', 'Total Days', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                        {!! Form::number('total_days', old('total_days', $leave->total_days ?? 0), [
+                        {!! Form::number('total_days', old('total_days', $leave->total_days), [
                             'class' => 'form-control',
-                            'min' => 0,
-                            'step' => 1,
                             'id' => 'total_days',
-                            'required' => true
+                            'required' => true,
                         ]) !!}
                     </div>
 
-                    <div class="col-12 mb-3 col-md-3">
-                        {!! Form::label('name', 'Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                        {!! Form::select(
-                            'status',
-                            [
-                                'pending' => 'Pending',
-                                'approved' => 'Approved',
-                                'rejected' => 'Rejected',
-                            ],
-                            old('status', $leave->status),
-                            [
-                                'class' => 'form-control form-select select2',
-                                'required' => true
-                            ],
-                        ) !!}
-                    </div>
+                    @if (auth()->user()->hasRole('super-admin'))
+                        <div class="col-12 mb-3 col-md-3">
+                            {!! Form::label('name', 'Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                            {!! Form::select(
+                                'status',
+                                [
+                                    'pending' => 'Pending',
+                                    'approved' => 'Approved',
+                                    'rejected' => 'Rejected',
+                                ],
+                                old('status', $leave->status),
+                                [
+                                    'class' => 'form-control form-select select2',
+                                    'required' => true,
+                                ],
+                            ) !!}
+                        </div>
+                    @else
+                        {!! Form::hidden('status', 'pending') !!}
+                    @endif
 
                     <div class="col-12 mb-3 col-md-12">
                         {!! Form::label('name', 'Reason', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
                         {!! Form::textarea('reason', old('reason', $leave->reason), [
                             'class' => 'form-control',
-                            'required' => true
+                            'required' => true,
                         ]) !!}
                     </div>
 
@@ -139,8 +144,8 @@
         <script>
             $(document).ready(function() {
                 flatpickr("#start_date , #end_date", {
-                    enableTime: true,
-                    dateFormat: "Y-m-d H:i",
+                    enableTime: false,
+                    dateFormat: "Y-m-d",
                 });
             });
         </script>
@@ -153,7 +158,7 @@
                             $('#start_date_col').show();
                             $('#start_date').prop('required', true);
                             $('#end_date_col').hide();
-                            $('#total_days').val('0').prop('readonly', false)
+                            $('#total_days').prop('readonly', false)
                                 .removeClass('form-control-plaintext').addClass('form-control');
                             break;
                         case 'half day':
@@ -169,14 +174,14 @@
                             $('#end_date').prop('required', true);
                             $('#start_date_col').show();
                             $('#end_date_col').show();
-                            $('#total_days').val('0').prop('readonly', false)
+                            $('#total_days').prop('readonly', false)
                                 .removeClass('form-control-plaintext').addClass('form-control');
                             break;
                         default:
                             $('#start_date_col, #end_date_col').hide();
                             $('#start_date').prop('required', false);
                             $('#end_date').prop('required', false);
-                            $('#total_days').val('0').prop('readonly', false)
+                            $('#total_days').prop('readonly', false)
                                 .removeClass('form-control-plaintext').addClass('form-control');
                             break;
                     }

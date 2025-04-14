@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Employee;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -28,7 +29,9 @@ class EmployeeTableSeeder extends Seeder
             'gender' => 'male',
             'address' => 'United States, bird street, New York',
             'marital_status' => 'married',
-            'status' => 'active', 
+            'status' => 'active',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
     }
 }

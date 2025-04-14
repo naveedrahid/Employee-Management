@@ -156,6 +156,14 @@
                 </ul>
             </li>
         @endif
+        @can('view leave')
+            <li class="menu-item {{ request()->is('backend/leaves*') ? 'active open' : '' }}">
+                <a href="{{ route('backend.leave.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                    <div class="text-truncate">Apply Leave</div>
+                </a>
+            </li>
+        @endcan
 
         <!-- Logout -->
         <li class="menu-item">

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('leave_status', ['full day', 'half day', 'many days'])->default('full day');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->integer('total_days');
+            $table->string('total_days');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->text('reason')->nullable();
             $table->softDeletes();

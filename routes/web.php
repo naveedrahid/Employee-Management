@@ -134,6 +134,7 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
         Route::get('/{leave}/edit', [LeaveController::class, 'edit'])->middleware('permission:update leave')->name('leave.edit');
         Route::put('/{leave}', [LeaveController::class, 'update'])->middleware('permission:update leave')->name('leave.update');
         Route::delete('/{leave}', [LeaveController::class, 'destroy'])->middleware('permission:delete leave')->name('leave.destroy');
+        Route::post('/{leave}/change-status', [LeaveController::class, 'changeStatus'])->name('leave.changeStatus');
     });
 
     // Employee Salary routes
