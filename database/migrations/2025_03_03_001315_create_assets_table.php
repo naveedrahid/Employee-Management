@@ -13,11 +13,18 @@ return new class extends Migration
     {
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('employee_id')->constrained()->onDelete('cascade');
             $table->string('asset_name');
             $table->string('asset_code')->unique();
-            $table->foreignId('assigned_to')->nullable()->constrained('employees')->onDelete('set null');
             $table->date('assigned_date')->nullable();
             $table->date('return_date')->nullable();
+            $table->enum('status', ['assigned', 'not assigned', 'return'])->default('not assigned')->nullable();
+            $table->enum('condition', ['new', 'used', 'broken'])->default('new')->nullable();
+            $table->text('description')->nullable();
+            $table->string('serial_number')->nullable();
+            $table->string('model')->nullable();
+            $table->string('brand')->nullable();
+            $table->string('image')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\AssetController;
 use App\Http\Controllers\Backend\AttendanceController;
 use App\Http\Controllers\Backend\BankDetailController;
 use App\Http\Controllers\Backend\BranchController;
@@ -169,6 +170,16 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
         // Route::put('/{attendance}', [AttendanceController::class, 'update'])->middleware('permission:update attendance')->name('attendance.update');
         // Route::delete('/{attendance}', [AttendanceController::class, 'destroy'])->middleware('permission:delete attendance')->name('attendance.destroy');
     });
+
+        // Asset routes
+        Route::group(['prefix' => 'assets'], function(){ 
+            Route::get('/', [AssetController::class, 'index'])->middleware('permission:view asset')->name('asset.index');
+            Route::get('/create', [AssetController::class, 'create'])->middleware('permission:create asset')->name('asset.create');
+            Route::post('/', [AssetController::class, 'store'])->middleware('permission:create asset')->name('asset.store');
+            Route::get('/{asset}/edit', [AssetController::class, 'edit'])->middleware('permission:update asset')->name('asset.edit');
+            Route::put('/{asset}', [AssetController::class, 'update'])->middleware('permission:update asset')->name('asset.update');
+            Route::delete('/{asset}', [AssetController::class, 'destroy'])->middleware('permission:delete asset')->name('asset.destroy');
+        });
 
     // // Home/Dashboard
     Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('permission:view dashboard');
