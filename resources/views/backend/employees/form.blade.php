@@ -51,160 +51,188 @@
                             </div>
 
                             <div class="col-md-6 col-12">
-                                {!! Form::label('name', 'Employee Name', ['class' => 'form-label']) !!}
-                                {!! Form::select(
-                                    'user_id',
-                                    ['' => 'Select Employee'] + $employeeData['users']->pluck('name', 'id')->toArray(),
-                                    old('user_id', $employee->user_id),
-                                    ['class' => 'select2 form-select', 'required' => true],
-                                ) !!}
+                                <div class="input-inner">
+                                    {!! Form::label('name', 'Employee Name', ['class' => 'form-label']) !!}
+                                    {!! Form::select(
+                                        'user_id',
+                                        ['' => 'Select Employee'] + $employeeData['users']->pluck('name', 'id')->toArray(),
+                                        old('user_id', $employee->user_id),
+                                        ['class' => 'select2 form-select', 'required' => true],
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-6 col-12">
-                                {!! Form::label('name', 'Branch Name', ['class' => 'form-label']) !!}
-                                {!! Form::select(
-                                    'branch_id',
-                                    ['' => 'Select Branch'] + $employeeData['branches']->pluck('name', 'id')->toArray(),
-                                    old('branch_id', $employee->branch_id ?? ''),
-                                    ['class' => 'select2 form-select', 'required' => true],
-                                ) !!}
+                                <div class="input-inner">
+                                    {!! Form::label('name', 'Branch Name', ['class' => 'form-label']) !!}
+                                    {!! Form::select(
+                                        'branch_id',
+                                        ['' => 'Select Branch'] + $employeeData['branches']->pluck('name', 'id')->toArray(),
+                                        old('branch_id', $employee->branch_id ?? ''),
+                                        ['class' => 'select2 form-select', 'required' => true],
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-6 col-12">
-                                {!! Form::label('name', 'Department Name', ['class' => 'form-label']) !!}
-                                {!! Form::select(
-                                    'department_id',
-                                    ['' => 'Select Branch'] + $employeeData['departments']->pluck('name', 'id')->toArray(),
-                                    old('department_id', $employee->department_id ?? ''),
-                                    ['class' => 'select2 form-select', 'required' => true],
-                                ) !!}
+                                <div class="input-inner">
+                                    {!! Form::label('name', 'Department Name', ['class' => 'form-label']) !!}
+                                    {!! Form::select(
+                                        'department_id',
+                                        ['' => 'Select Branch'] + $employeeData['departments']->pluck('name', 'id')->toArray(),
+                                        old('department_id', $employee->department_id ?? ''),
+                                        ['class' => 'select2 form-select', 'required' => true],
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-6 col-12">
-                                {!! Form::label('name', 'Position Name', ['class' => 'form-label']) !!}
-                                {!! Form::select(
-                                    'position_id',
-                                    ['' => 'Select Position'] + $employeeData['positions']->pluck('name', 'id')->toArray(),
-                                    old('position_id', $employee->position_id ?? ''),
-                                    ['class' => 'select2 form-select', 'required' => true],
-                                ) !!}
+                                <div class="input-inner">
+                                    {!! Form::label('name', 'Position Name', ['class' => 'form-label']) !!}
+                                    {!! Form::select(
+                                        'position_id',
+                                        ['' => 'Select Position'] + $employeeData['positions']->pluck('name', 'id')->toArray(),
+                                        old('position_id', $employee->position_id ?? ''),
+                                        ['class' => 'select2 form-select', 'required' => true],
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-6 col-12">
-                                {!! Form::label('name', 'Country Name', ['class' => 'form-label']) !!}
-                                {!! Form::select(
-                                    'country_id',
-                                    ['' => 'Select Country'] + $employeeData['countries']->pluck('name', 'id')->toArray(),
-                                    old('country_id', $employee->country_id ?? ''),
-                                    ['class' => 'select2 form-select', 'id' => 'country', 'required' => true],
-                                ) !!}
+                                <div class="input-inner">
+                                    {!! Form::label('name', 'Country Name', ['class' => 'form-label']) !!}
+                                    {!! Form::select(
+                                        'country_id',
+                                        ['' => 'Select Country'] + $employeeData['countries']->pluck('name', 'id')->toArray(),
+                                        old('country_id', $employee->country_id ?? ''),
+                                        ['class' => 'select2 form-select', 'id' => 'country', 'required' => true],
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-6 col-12">
-                                {!! Form::label('name', 'City Name', ['class' => 'form-label']) !!}
-                                {!! Form::select(
-                                    'city_id',
-                                    ['' => 'Select City'] + $employeeData['cities']->pluck('name', 'id')->toArray(),
-                                    old('city_id', $employee->city_id ?? ''),
-                                    ['class' => 'select2 form-select', 'id' => 'city', 'required' => true],
-                                ) !!}
+                                <div class="input-inner">
+                                    {!! Form::label('name', 'City Name', ['class' => 'form-label']) !!}
+                                    {!! Form::select(
+                                        'city_id',
+                                        ['' => 'Select City'] + $employeeData['cities']->pluck('name', 'id')->toArray(),
+                                        old('city_id', $employee->city_id ?? ''),
+                                        ['class' => 'select2 form-select', 'id' => 'city', 'required' => true],
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-6 col-12">
-                                {!! Form::label('name', 'Employment Type', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                                {!! Form::select(
-                                    'employment_type',
-                                    ['' => 'Select Employment'] + [
-                                        'full-time' => 'Full Time',
-                                        'part-time' => 'Part Time',
-                                        'contract' => 'Contract',
-                                        'probationary' => 'Probationary',
-                                    ],
-                                    old('employment_type', $employee->employment_type),
-                                    ['class' => 'form-control form-select select2', 'required' => true],
-                                ) !!}
+                                <div class="input-inner">
+                                    {!! Form::label('name', 'Employment Type', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                    {!! Form::select(
+                                        'employment_type',
+                                        ['' => 'Select Employment'] + [
+                                            'full-time' => 'Full Time',
+                                            'part-time' => 'Part Time',
+                                            'contract' => 'Contract',
+                                            'probationary' => 'Probationary',
+                                        ],
+                                        old('employment_type', $employee->employment_type),
+                                        ['class' => 'form-control form-select select2', 'required' => true],
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-6 col-12">
-                                {!! Form::label('name', 'Position Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                                {!! Form::select(
-                                    'position_status',
-                                    ['' => 'Select Position'] + [
-                                        'intern' => 'Intern',
-                                        'junior' => 'Junior',
-                                        'senior' => 'Senior',
-                                        'lead' => 'Lead',
-                                    ],
-                                    old('position_status', $employee->position_status),
-                                    ['class' => 'form-control form-select select2', 'required' => true],
-                                ) !!}
+                                <div class="input-inner">
+                                    {!! Form::label('name', 'Position Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                    {!! Form::select(
+                                        'position_status',
+                                        ['' => 'Select Position'] + [
+                                            'intern' => 'Intern',
+                                            'junior' => 'Junior',
+                                            'senior' => 'Senior',
+                                            'lead' => 'Lead',
+                                        ],
+                                        old('position_status', $employee->position_status),
+                                        ['class' => 'form-control form-select select2', 'required' => true],
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-6 col-12">
-                                {!! Form::label('name', 'Joining Date', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                                {!! Form::text('joining_date', old('joining_date', $employee->joining_date), [
-                                    'class' => 'form-control',
-                                    'id' => 'joining_date',
-                                    'required' => true,
-                                ]) !!}
+                                <div class="input-inner">
+                                    {!! Form::label('name', 'Joining Date', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                    {!! Form::text('joining_date', old('joining_date', $employee->joining_date), [
+                                        'class' => 'form-control',
+                                        'id' => 'joining_date',
+                                        'required' => true,
+                                    ]) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-6 col-12">
-                                {!! Form::label('name', 'Date of birth', ['class' => 'form-label']) !!} (<small class="text-warning">Optinal</small>)
-                                {!! Form::text('dob', old('dob', $employee->dob), [
-                                    'class' => 'form-control',
-                                    'id' => 'dob',
-                                ]) !!}
+                                <div class="input-inner">
+                                    {!! Form::label('name', 'Date of birth', ['class' => 'form-label']) !!} (<small class="text-warning">Optinal</small>)
+                                    {!! Form::text('dob', old('dob', $employee->dob), [
+                                        'class' => 'form-control',
+                                        'id' => 'dob',
+                                    ]) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-12 col-12">
-                                {!! Form::label('name', 'Address', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                                {!! Form::textarea('address', old('address', $employee->address), [
-                                    'class' => 'form-control',
-                                    'required' => true,
-                                ]) !!}
+                                <div class="input-inner">
+                                    {!! Form::label('name', 'Address', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                    {!! Form::textarea('address', old('address', $employee->address), [
+                                        'class' => 'form-control',
+                                        'required' => true,
+                                    ]) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-4 col-12">
-                                {!! Form::label('name', 'Gender', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                                {!! Form::select(
-                                    'gender',
-                                    ['' => 'Select Gender'] + [
-                                        'male' => 'Male',
-                                        'female' => 'Female',
-                                        'other' => 'Other',
-                                    ],
-                                    old('gender', $employee->gender),
-                                    ['class' => 'form-control form-select select2', 'required' => true],
-                                ) !!}
+                                <div class="input-inner">
+                                    {!! Form::label('name', 'Gender', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                    {!! Form::select(
+                                        'gender',
+                                        ['' => 'Select Gender'] + [
+                                            'male' => 'Male',
+                                            'female' => 'Female',
+                                            'other' => 'Other',
+                                        ],
+                                        old('gender', $employee->gender),
+                                        ['class' => 'form-control form-select select2', 'required' => true],
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-4 col-12">
-                                {!! Form::label('name', 'Marital Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                                {!! Form::select(
-                                    'marital_status',
-                                    ['' => 'Select Marital Status'] + [
-                                        'married' => 'Married',
-                                        'single' => 'Single',
-                                        'divorced' => 'Divorced',
-                                        'widowed' => 'Widowed',
-                                    ],
-                                    old('marital_status', $employee->marital_status),
-                                    ['class' => 'form-control form-select select2', 'required' => true],
-                                ) !!}
+                                <div class="input-inner">
+                                    {!! Form::label('name', 'Marital Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                    {!! Form::select(
+                                        'marital_status',
+                                        ['' => 'Select Marital Status'] + [
+                                            'married' => 'Married',
+                                            'single' => 'Single',
+                                            'divorced' => 'Divorced',
+                                            'widowed' => 'Widowed',
+                                        ],
+                                        old('marital_status', $employee->marital_status),
+                                        ['class' => 'form-control form-select select2', 'required' => true],
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-4 col-12">
-                                {!! Form::label('name', 'Employee Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                                {!! Form::select(
-                                    'status',
-                                    ['' => 'Select Status'] + [
-                                        'active' => 'Active',
-                                        'inactive' => 'Inactive',
-                                    ],
-                                    old('status', $employee->status),
-                                    ['class' => 'form-control form-select select2', 'required' => true],
-                                ) !!}
+                                <div class="input-inner">
+                                    {!! Form::label('name', 'Employee Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                    {!! Form::select(
+                                        'status',
+                                        ['' => 'Select Status'] + [
+                                            'active' => 'Active',
+                                            'inactive' => 'Inactive',
+                                        ],
+                                        old('status', $employee->status),
+                                        ['class' => 'form-control form-select select2', 'required' => true],
+                                    ) !!}
+                                </div>
                             </div>
                         </div>
 
@@ -233,7 +261,13 @@
                     e.preventDefault();
 
                     const self = $(this);
-                    const { url, token, formData, button, loadingSpinner } = getFormData(this);
+                    const {
+                        url,
+                        token,
+                        formData,
+                        button,
+                        loadingSpinner
+                    } = getFormData(this);
 
                     let isValid = requestValidationHandler.call(self,
                         'input[required], select[required], textarea[required]'

@@ -306,19 +306,20 @@
         function requestValidationHandler(selectors) {
             let isValid = true;
 
-            $(this).find(selectors).each(function() {
-                const value = $(this).val().trim();
-                const errorFeedback = $(this).next('.invalid-feedback');
-                if (!value) {
-                    isValid = false;
-                    $(this).addClass('is-invalid');
-                    if (errorFeedback.length === 0) {
-                        $(this).after('<div class="invalid-feedback">This field is required.</div>');
-                    }
-                } else {
-                    $(this).removeClass('is-invalid');
-                    errorFeedback.remove();
+            $(selectors).each(function() {
+            const value = $(this).val().trim();
+            const input = $(this).closest('.input-inner'); 
+            const errorFeedback = input.next('.invalid-feedback');
+            if (!value) {
+                isValid = false;
+                input.addClass('is-invalid');
+                if (errorFeedback.length === 0) {
+                input.after('<div class="invalid-feedback">This field is required.</div>');
                 }
+            } else {
+                input.removeClass('is-invalid');
+                errorFeedback.remove();
+            }
             });
 
             return isValid;
