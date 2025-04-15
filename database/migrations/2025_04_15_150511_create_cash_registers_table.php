@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('cash_registers', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->foreignId('branch_id')->nullable()->constrained()->onDelete('set null');
+            $table->decimal('opening_balance', 12, 2)->default(0);
+            $table->decimal('current_balance', 12, 2)->default(0);
+            $table->text('note')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
