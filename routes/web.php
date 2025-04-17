@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\AssetController;
 use App\Http\Controllers\Backend\AttendanceController;
 use App\Http\Controllers\Backend\BankDetailController;
 use App\Http\Controllers\Backend\BranchController;
+use App\Http\Controllers\Backend\CashRegisterController;
 use App\Http\Controllers\Backend\DepartmentController;
 use App\Http\Controllers\Backend\EmployeeController;
 use App\Http\Controllers\Backend\EmployeeSalaryController;
@@ -179,6 +180,15 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
             Route::get('/{asset}/edit', [AssetController::class, 'edit'])->middleware('permission:update asset')->name('asset.edit');
             Route::put('/{asset}', [AssetController::class, 'update'])->middleware('permission:update asset')->name('asset.update');
             Route::delete('/{asset}', [AssetController::class, 'destroy'])->middleware('permission:delete asset')->name('asset.destroy');
+        });
+
+        Route::group(['prefix' => 'cash-registers'], function(){ 
+            Route::get('/', [CashRegisterController::class, 'index'])->middleware('permission:view cash_register')->name('cash_register.index');
+            Route::get('/create', [CashRegisterController::class, 'create'])->middleware('permission:create cash_register')->name('cash_register.create');
+            Route::post('/', [CashRegisterController::class, 'store'])->middleware('permission:create cash_register')->name('cash_register.store');
+            Route::get('/{cash_register}/edit', [CashRegisterController::class, 'edit'])->middleware('permission:update cash_register')->name('cash_register.edit');
+            Route::put('/{cash_register}', [CashRegisterController::class, 'update'])->middleware('permission:update cash_register')->name('cash_register.update');
+            Route::delete('/{cash_register}', [CashRegisterController::class, 'destroy'])->middleware('permission:delete cash_register')->name('cash_register.destroy');
         });
 
     // // Home/Dashboard

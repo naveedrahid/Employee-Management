@@ -360,7 +360,7 @@ class UserRolePermissionSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
 
-            /* permissions Employee Salary */
+            /* permissions Company Asset */
 
             [
                 'name' => 'view asset',
@@ -382,6 +382,33 @@ class UserRolePermissionSeeder extends Seeder
             ],
             [
                 'name' => 'delete asset',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+
+            /* permissions Cash Register */
+
+            [
+                'name' => 'view cash_register',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'create cash_register',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'update cash_register',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'delete cash_register',
                 'guard_name' => 'web',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
