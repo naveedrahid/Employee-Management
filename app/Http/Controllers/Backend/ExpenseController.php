@@ -15,7 +15,8 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        // $expense = Expense::with(['employee:id,user_id', 'user:id,name' , 'cashRegister:id,opening_balance'])->get();
+        $expenses = Expense::with(['employee:id,user_id', 'user:id,name'])->get();
+        return view('backend.expenses.index', compact('expenses'));
     }
 
     /**
@@ -37,7 +38,38 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'employee_id' => 'required',
+            'cash_register_id' => 'required',
+            'amount' => 'required|numeric|min:0',
+            'description' => 'required|string|max:255',
+            'status' => 'required|in:pending,approved,rejected',
+            'approved_by' => 'required',
+            'receipt' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'remaining_balance' => 'required|numeric|min:0',
+        ]);
+
+        $lastExpense = Expense::where('cash_register_id', $data['cash_register_id'])
+            ->orderBy('id', 'desc')
+            ->first();
+
+        $previousBalance = $lastExpense ? $lastExpense->remaining_balance : 0;
+        $data['remaining_balance'] = $previousBalance - $data['amount'];
+        $data['approved_at'] = now();
+
+        $expense = Expense::create($data);
+
+        if ($request->hasFile('receipt')) {
+            $file = $request->file('receipt');
+            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $file->getClientOriginalExtension();
+            $timestamp = now()->format('YmdHis');
+            $newFilename = "{$filename}_{$timestamp}_expense-{$expense->id}.{$extension}";
+            $path = $file->storeAs('receipts/expense', $newFilename, 'public');
+            $expense->update(['receipt' => $path]);
+        }
+
+        return response()->json(['message' => 'Expense created successfully.'], 201);
     }
 
     /**

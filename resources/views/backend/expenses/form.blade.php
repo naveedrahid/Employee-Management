@@ -90,8 +90,8 @@
                     </div>
 
                     <div class="col-12 mb-3 col-md-12">
-                        {!! Form::label('notes', 'Notes', ['class' => 'form-label']) !!}
-                        {!! Form::textarea('notes', null, ['class' => 'form-control']) !!}
+                        {!! Form::label('description', 'Description', ['class' => 'form-label']) !!}
+                        {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="demo-inline-spacing">
                         {!! Form::submit($expense->exists ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
@@ -119,62 +119,54 @@
             });
         </script>
 
-
-        {{-- <script>
-            $(document).ready(function() {
-                $(document).on('submit', '#cashRegisterCreate , #cashRegisterUpdate', function(e) {
+        <script>
+            $(document).ready(function () {
+                $(document).on('submit', '#expenseCreate , #expenseUpdate' , function (e) {
                     e.preventDefault();
 
                     const self = $(this);
-
-                    const {
-                        url,
-                        token,
-                        formData,
-                        button,
-                        loadingSpinner
-                    } = getFormData(self);
-
                     let isValid = requestValidationHandler.call(self, 'input[required], select[required]');
+                    
                     if (!isValid) {
                         toastr.error('Please fill all required fields.');
                         return;
                     }
+                    
+                    const {url, token, formData, button, loadingSpinner} = getFormData(self);
 
-                    button.prop('disabled', true).text('Processing...');
                     loadingSpinner.show();
+                    button.prop('disabled', true).text('Processing...');
 
                     $.ajax({
-                            type: "POST",
-                            url: url,
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            headers: {
-                                'X-CSRF-TOKEN': token,
-                            }
-                        })
-                        .done(function(response) {
-                            loadingSpinner.hide();
-                            button.prop('disabled', false).text('Submit');
-                            if (self.attr('id') === 'cashRegisterCreate') {
-                                self[0].reset();
-                                self.find('select').each(function() {
-                                    $(this).val($(this).find('option:first').val()).trigger(
-                                        'change');
-                                });
-                            }
-                            toastr.success(response.message);
-                        })
-                        .fail(function(xhr) {
-                            handleAjaxError(xhr);
-                        })
-                        .always(function() {
-                            loadingSpinner.hide();
-                            button.prop('disabled', false).text('Submit');
-                        });
+                        type: "POST",
+                        url: url,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        headers: {
+                            'X-CSRF-TOKEN': token,
+                        }
+                    })
+                    .done(function (response){
+                        loadingSpinner.hide();
+                        button.prop('disabled', false).text('Submit');
+                        if (self.attr('id') === 'expenseCreate') {
+                            self[0].reset();
+                            self.find('select').each(function(){
+                                $(this).val($(this).find('option:first').val()).trigger('change');
+                            });
+                        }
+                        toastr.success(response.message);
+                    })
+                    .fail(function(xhr){
+                        handleAjaxError(xhr);
+                    })
+                    .always(function(){
+                        loadingSpinner.hide();
+                        button.prop('disabled', false).text('Submit');
+                    });
                 });
             });
-        </script> --}}
+        </script>
     @endpush
 </x-app-layout>

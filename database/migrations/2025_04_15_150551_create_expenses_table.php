@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('amount', 12, 2);
             $table->text('description')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->nullable();
+            $table->enum('type', ['new_balance'])->nullable();
             $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamp('approved_at')->nullable();
             $table->string('receipt')->nullable();
