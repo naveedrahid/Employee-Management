@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('employee_id')->constrained()->onDelete('cascade');
+            $table->foreignId('employee_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('cash_register_id')->nullable()->constrained()->onDelete('set null');
             $table->decimal('amount', 12, 2);
             $table->text('description')->nullable();
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->nullable();
             $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamp('approved_at')->nullable();
             $table->string('receipt')->nullable();
+            $table->decimal('remaining_balance')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -16,4 +16,9 @@ class CashRegister extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
 }

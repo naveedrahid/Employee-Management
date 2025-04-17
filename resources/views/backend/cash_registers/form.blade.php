@@ -21,14 +21,14 @@
                     'novalidate' => true,
                 ]) !!}
                 <div class="row">
-                    <div class="col-12 mb-3 col-md-6">
+                    <div class="col-12 mb-3 col-md-4">
                         <div class="input-inner">
                             {!! Form::label('title', 'Title', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
                             {!! Form::text('title', null, ['class' => 'form-control', 'required' => true]) !!}
                         </div>
                     </div>
 
-                    <div class="col-12 mb-3 col-md-6">
+                    <div class="col-12 mb-3 col-md-4">
                         <div class="input-inner">
                             {!! Form::label('employee_id', 'Employee Name', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
                             {!! Form::select(
@@ -40,17 +40,10 @@
                         </div>
                     </div>
 
-                    <div class="col-12 mb-3 col-md-6">
+                    <div class="col-12 mb-3 col-md-4">
                         <div class="input-inner">
                             {!! Form::label('opening_balance', 'Opining Balance', ['class' => 'form-label']) !!}
                             {!! Form::number('opening_balance', null, ['class' => 'form-control']) !!}
-                        </div>
-                    </div>
-
-                    <div class="col-12 mb-3 col-md-6">
-                        <div class="input-inner">
-                            {!! Form::label('closing_balance', 'Closing Balance', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                            {!! Form::number('closing_balance', null, ['class' => 'form-control', 'required' => true]) !!}
                         </div>
                     </div>
 

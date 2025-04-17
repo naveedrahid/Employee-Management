@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->foreignId('employee_id')->constrained()->onDelete('cascade');
-            $table->string('opening_balance')->nullable();
-            $table->string('closing_balance')->nullable();
+            $table->decimal('opening_balance', 12, 2)->default(0);
             $table->text('notes')->nullable();
             $table->softDeletes();
             $table->timestamps();

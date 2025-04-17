@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\CashRegisterController;
 use App\Http\Controllers\Backend\DepartmentController;
 use App\Http\Controllers\Backend\EmployeeController;
 use App\Http\Controllers\Backend\EmployeeSalaryController;
+use App\Http\Controllers\Backend\ExpenseController;
 use App\Http\Controllers\Backend\LeaveController;
 use App\Http\Controllers\Backend\PayrollController;
 use App\Http\Controllers\Backend\PermissionController;
@@ -182,6 +183,7 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
             Route::delete('/{asset}', [AssetController::class, 'destroy'])->middleware('permission:delete asset')->name('asset.destroy');
         });
 
+        // Cash Register routes
         Route::group(['prefix' => 'cash-registers'], function(){ 
             Route::get('/', [CashRegisterController::class, 'index'])->middleware('permission:view cash_register')->name('cash_register.index');
             Route::get('/create', [CashRegisterController::class, 'create'])->middleware('permission:create cash_register')->name('cash_register.create');
@@ -189,6 +191,16 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
             Route::get('/{cash_register}/edit', [CashRegisterController::class, 'edit'])->middleware('permission:update cash_register')->name('cash_register.edit');
             Route::put('/{cash_register}', [CashRegisterController::class, 'update'])->middleware('permission:update cash_register')->name('cash_register.update');
             Route::delete('/{cash_register}', [CashRegisterController::class, 'destroy'])->middleware('permission:delete cash_register')->name('cash_register.destroy');
+        });
+        
+        // Expense routes
+        Route::group(['prefix' => 'expenses'], function(){ 
+            Route::get('/', [ExpenseController::class, 'index'])->middleware('permission:view expense')->name('expense.index');
+            Route::get('/create', [ExpenseController::class, 'create'])->middleware('permission:create expense')->name('expense.create');
+            Route::post('/', [ExpenseController::class, 'store'])->middleware('permission:create expense')->name('expense.store');
+            Route::get('/{expense}/edit', [ExpenseController::class, 'edit'])->middleware('permission:update expense')->name('expense.edit');
+            Route::put('/{expense}', [ExpenseController::class, 'update'])->middleware('permission:update expense')->name('expense.update');
+            Route::delete('/{expense}', [ExpenseController::class, 'destroy'])->middleware('permission:delete expense')->name('expense.destroy');
         });
 
     // // Home/Dashboard
