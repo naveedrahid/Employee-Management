@@ -194,7 +194,7 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
         });
         
         // Expense routes
-        Route::group(['prefix' => 'expenses'], function(){ 
+        Route::group(['prefix' => 'expenses'], function(){
             Route::get('/', [ExpenseController::class, 'index'])->middleware('permission:view expense')->name('expense.index');
             Route::get('/create', [ExpenseController::class, 'create'])->middleware('permission:create expense')->name('expense.create');
             Route::post('/', [ExpenseController::class, 'store'])->middleware('permission:create expense')->name('expense.store');

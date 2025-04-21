@@ -15,20 +15,26 @@
                 <table class="table table-striped">
                     <thead class="table-light">
                         <tr>
-                            <th>{{ __('Title') }}</th>
-                            <th>{{ __('Hand By') }}</th>
-                            <th>{{ __('Oppening Balance') }}</th>
-                            <th>{{ __('Notes') }}</th>
+                            <th>{{ __('Name') }}</th>
+                            <th>{{ __('Amount') }}</th>
+                            <th>{{ __('Status') }}</th>
+                            <th>{{ __('Aproved By') }}</th>
+                            <th>{{ __('Appoved At') }}</th>
+                            <th>{{ __('Reciept') }}</th>
+                            <th>{{ __('Remaining Balance') }}</th>
                             <th>{{ __('Action') }}</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        {{-- @forelse ($expenses as $expense)
-                            <tr>
-                                <td>{{ $expense->title }}</td>
-                                <td>{{ $expense->employee->user->name }}</td>
-                                <td>{{ $expense->opening_balance }}</td>
-                                <td>{{ $expense->notes }}</td>
+                        @forelse ($expenses as $expense)
+                            <tr class="{{ $expense->type == 'new_balance' ? 'table-success' : 'table-danger' }}">
+                                <td>{{ $expense->employee->user->name ?? '' }}</td>
+                                <td>{{ $expense->amount ?? '' }}</td>
+                                <td>{{ $expense->status ?? '' }}</td>
+                                <td>{{ $expense->approvedByUser->user->name ?? '' }}</td>
+                                <td>{{  Date('Y M d - h:iA', strtotime($expense->approved_at)) }}</td>
+                                <td>{{ $expense->reciept ?? '' }}</td>
+                                <td>{{ $expense->remaining_balance ?? '' }}</td>
                                 <td>
                                     <a class="btn btn-icon btn-primary"
                                         href="{{ route('backend.expense.edit', $expense->id) }}"><i
@@ -42,7 +48,7 @@
                             <tr>
                                 <td class="text-center" colspan="9">{{ __('No Expense Found!') }}</td>
                             </tr>
-                        @endforelse --}}
+                        @endforelse
                     </tbody>
                 </table>
             </div>

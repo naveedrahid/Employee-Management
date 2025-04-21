@@ -19,110 +19,126 @@
                     'novalidate' => true,
                 ]) !!}
                 <div class="row">
-                    <div class="col-12 mb-3 col-md-4">
-                        {!! Form::label('name', 'Employee Name', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                        @if (auth()->user()->hasRole('super-admin'))
+                    <div class="col-12 mb-3 col-md-6">
+                        <div class="input-inner">
+                            {!! Form::label('name', 'Employee Name', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                            @if (auth()->user()->hasRole('super-admin'))
+                                {!! Form::select(
+                                    'employee_id',
+                                    ['' => 'Select Type'] +
+                                        $users->mapWithKeys(function ($employee) {
+                                                return [$employee->id => $employee->user->name ?? ''];
+                                            })->toArray(),
+                                    old('employee_id', $leave->employee_id),
+                                    [
+                                        'class' => 'form-control form-select select2',
+                                        'required' => true,
+                                    ],
+                                ) !!}
+                            @else
+                                {!! Form::hidden('employee_id', auth()->user()->id) !!}
+                                {!! Form::text('employee_name', auth()->user()->name, ['class' => 'form-control', 'readonly']) !!}
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3 col-md-6">
+                        <div class="input-inner">
+                            {!! Form::label('name', 'Leave Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
                             {!! Form::select(
-                                'employee_id',
-                                ['' => 'Select Type'] +
-                                    $users->mapWithKeys(function ($employee) {
-                                            return [$employee->id => $employee->user->name ?? ''];
-                                        })->toArray(),
-                                old('employee_id', $leave->employee_id),
+                                'leave_status',
+                                ['' => 'Select Status'] + [
+                                    'full day' => 'Full Day',
+                                    'half day' => 'Half Day',
+                                    'many days' => 'Many Days',
+                                ],
+                                old('leave_status', $leave->leave_status),
                                 [
                                     'class' => 'form-control form-select select2',
+                                    'id' => 'leave_status',
                                     'required' => true,
                                 ],
                             ) !!}
-                        @else
-                            {!! Form::hidden('employee_id', auth()->user()->id) !!}
-                            {!! Form::text('employee_name', auth()->user()->name, ['class' => 'form-control', 'readonly']) !!}
-                        @endif
+                        </div>
                     </div>
 
-                    <div class="col-12 mb-3 col-md-4">
-                        {!! Form::label('name', 'Leave Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                        {!! Form::select(
-                            'leave_status',
-                            ['' => 'Select Status'] + [
-                                'full day' => 'Full Day',
-                                'half day' => 'Half Day',
-                                'many days' => 'Many Days',
-                            ],
-                            old('leave_status', $leave->leave_status),
-                            [
-                                'class' => 'form-control form-select select2',
-                                'id' => 'leave_status',
-                                'required' => true,
-                            ],
-                        ) !!}
-                    </div>
-
-                    <div class="col-12 mb-3 col-md-4">
-                        {!! Form::label('name', 'Leave Type', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                        {!! Form::select(
-                            'leave_type_id',
-                            ['' => 'Select Leave Type'] + $leave_type_id->pluck('category', 'id')->toArray(),
-                            old('leave_type_id', $leave->leave_type_id),
-                            [
-                                'class' => 'form-control form-select select2',
-                                'required' => true,
-                            ],
-                        ) !!}
-                    </div>
-
-                    <div class="col-12 mb-3 col-md-3 " id="start_date_col">
-                        {!! Form::label('name', 'Start Date', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                        {!! Form::date('start_date', old('start_date',$leave->start_date), [
-                            'class' => 'form-control',
-                            'id' => 'start_date',
-                        ]) !!}
-                    </div>
-
-                    <div class="col-12 mb-3 col-md-3" id="end_date_col">
-                        {!! Form::label('name', 'End Date', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                        {!! Form::date('end_date', old('end_date', $leave->end_date), [
-                            'class' => 'form-control',
-                            'id' => 'end_date',
-                        ]) !!}
-                    </div>
-
-                    <div class="col-12 mb-3 col-md-3">
-                        {!! Form::label('name', 'Total Days', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                        {!! Form::number('total_days', old('total_days', $leave->total_days), [
-                            'class' => 'form-control',
-                            'id' => 'total_days',
-                            'required' => true,
-                        ]) !!}
-                    </div>
-
-                    @if (auth()->user()->hasRole('super-admin'))
-                        <div class="col-12 mb-3 col-md-3">
-                            {!! Form::label('name', 'Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                    <div class="col-12 mb-3 col-md-6">
+                        <div class="input-inner">
+                            {!! Form::label('name', 'Leave Type', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
                             {!! Form::select(
-                                'status',
-                                [
-                                    'pending' => 'Pending',
-                                    'approved' => 'Approved',
-                                    'rejected' => 'Rejected',
-                                ],
-                                old('status', $leave->status),
+                                'leave_type_id',
+                                ['' => 'Select Leave Type'] + $leave_type_id->pluck('category', 'id')->toArray(),
+                                old('leave_type_id', $leave->leave_type_id),
                                 [
                                     'class' => 'form-control form-select select2',
                                     'required' => true,
                                 ],
                             ) !!}
                         </div>
+                    </div>
+
+                    <div class="col-12 mb-3 col-md-6 " id="start_date_col">
+                        <div class="input-inner">
+                            {!! Form::label('name', 'Start Date', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                            {!! Form::date('start_date', old('start_date', $leave->start_date), [
+                                'class' => 'form-control',
+                                'id' => 'start_date',
+                            ]) !!}
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3 col-md-6" id="end_date_col">
+                        <div class="input-inner">
+                            {!! Form::label('name', 'End Date', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                            {!! Form::date('end_date', old('end_date', $leave->end_date), [
+                                'class' => 'form-control',
+                                'id' => 'end_date',
+                            ]) !!}
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3 col-md-3">
+                        <div class="input-inner">
+                            {!! Form::label('name', 'Total Days', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                            {!! Form::number('total_days', old('total_days', $leave->total_days), [
+                                'class' => 'form-control',
+                                'id' => 'total_days',
+                                'required' => true,
+                            ]) !!}
+                        </div>
+                    </div>
+
+                    @if (auth()->user()->hasRole('super-admin'))
+                        <div class="col-12 mb-3 col-md-3">
+                            <div class="input-inner">
+                                {!! Form::label('name', 'Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                {!! Form::select(
+                                    'status',
+                                    ['' => 'Select Status'] + [
+                                        'pending' => 'Pending',
+                                        'approved' => 'Approved',
+                                        'rejected' => 'Rejected',
+                                    ],
+                                    old('status', $leave->status),
+                                    [
+                                        'class' => 'form-control form-select select2',
+                                        'required' => true,
+                                    ],
+                                ) !!}
+                            </div>
+                        </div>
                     @else
                         {!! Form::hidden('status', 'pending') !!}
                     @endif
 
                     <div class="col-12 mb-3 col-md-12">
-                        {!! Form::label('name', 'Reason', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                        {!! Form::textarea('reason', old('reason', $leave->reason), [
-                            'class' => 'form-control',
-                            'required' => true,
-                        ]) !!}
+                        <div class="input-inner">
+                            {!! Form::label('name', 'Reason', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                            {!! Form::textarea('reason', old('reason', $leave->reason), [
+                                'class' => 'form-control',
+                                'required' => true,
+                            ]) !!}
+                        </div>
                     </div>
 
                     <div class="demo-inline-spacing">
@@ -187,10 +203,8 @@
                     }
                 }
 
-                // Call function on load (in case of edit page)
                 toggleDateFields();
 
-                // Call function on change
                 $('#leave_status').change(function() {
                     toggleDateFields();
                 });
@@ -213,6 +227,7 @@
                         button,
                         loadingSpinner
                     } = getFormData(this);
+
                     let isValid = requestValidationHandler.call(self,
                         'input[required], select[required], textarea[required], number[required]'
                     );

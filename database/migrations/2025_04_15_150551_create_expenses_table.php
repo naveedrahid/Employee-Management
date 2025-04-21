@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->nullable();
             $table->enum('type', ['new_balance'])->nullable();
-            $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('approved_by')->nullable()->constrained('employees')->onDelete('set null');
             $table->timestamp('approved_at')->nullable();
             $table->string('receipt')->nullable();
             $table->decimal('remaining_balance')->default(0);

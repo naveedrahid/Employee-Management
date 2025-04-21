@@ -173,6 +173,24 @@
                 </a>
             </li>
         @endcan
+        
+        @can('view cash_register')
+            <li class="menu-item {{ request()->is('backend/cash-registers*') ? 'active open' : '' }}">
+                <a href="{{ route('backend.cash_register.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                    <div class="text-truncate">Cash Register</div>
+                </a>
+            </li>
+        @endcan
+
+        @can('view expense')
+            <li class="menu-item {{ request()->is('backend/expenses*') ? 'active open' : '' }}">
+                <a href="{{ route('backend.expense.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                    <div class="text-truncate">Expenses</div>
+                </a>
+            </li>
+        @endcan
 
         <!-- Logout -->
         <li class="menu-item">

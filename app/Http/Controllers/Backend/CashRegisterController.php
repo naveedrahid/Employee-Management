@@ -54,6 +54,7 @@ class CashRegisterController extends Controller
             
             Expense::create([
                 'cash_register_id' => $cashRegister->id,
+                'employee_id' => $cashRegister->employee_id,
                 'amount' => $cashRegister->opening_balance,
                 'type' => 'new_balance',
                 'remaining_balance' => $newRemainingBalance,

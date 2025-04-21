@@ -81,7 +81,7 @@
                     <div class="col-12 mb-3 col-md-6">
                         <div class="input-inner">
                             {!! Form::label('remaining_balance', 'Remaining Balance', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                            {!! Form::number('remaining_balance', $lastExpense->remaining_balance, [
+                            {!! Form::number('remaining_balance', $lastExpense->remaining_balance ?? '', [
                                 'class' => 'form-control',
                                 'id' => 'remaining_balance',
                                 'readonly' => true,

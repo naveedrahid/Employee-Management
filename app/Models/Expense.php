@@ -21,4 +21,9 @@ class Expense extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+
+    public function approvedByUser()
+    {
+        return $this->belongsTo(Employee::class, 'approved_by');
+    }
 }
