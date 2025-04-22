@@ -55,8 +55,8 @@
                             {!! Form::submit($cash_register->exists ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
                         </div>
                     </div>
-                    {!! Form::close() !!}
                 </div>
+                {!! Form::close() !!}
             </div>
         </div>
 

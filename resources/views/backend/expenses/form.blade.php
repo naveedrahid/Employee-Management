@@ -19,86 +19,86 @@
                     'enctype' => 'multipart/form-data',
                     'novalidate' => true,
                 ]) !!}
-                <div class="row">
-                    <div class="col-12 mb-3 col-md-4">
-                        <div class="input-inner">
-                            {!! Form::label('title', 'Title', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                            {!! Form::text('title', null, ['class' => 'form-control', 'required' => true]) !!}
-                            <input type="hidden" name="cash_register_id" value="{{ $latestCashRegister }}">
+                    <div class="row">
+                        <div class="col-12 mb-3 col-md-4">
+                            <div class="input-inner">
+                                {!! Form::label('title', 'Title', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                {!! Form::text('title', null, ['class' => 'form-control', 'required' => true]) !!}
+                                <input type="hidden" name="cash_register_id" value="{{ $latestCashRegister }}">
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3 col-md-4">
+                            <div class="input-inner">
+                                {!! Form::label('employee_id', 'Employee Name', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                {!! Form::select(
+                                    'employee_id',
+                                    ['' => 'Select Employee'] + $employees->pluck('user.name', 'id')->toArray(),
+                                    old('employee_id', $expense->employee_id),
+                                    ['class' => 'form-control form-select select2', 'id' => 'employee', 'required' => true],
+                                ) !!}
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3 col-md-4">
+                            <div class="input-inner">
+                                {!! Form::label('amount', 'Amount', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                {!! Form::number('amount', null, ['class' => 'form-control', 'id' => 'amount', 'required' => true]) !!}
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3 col-md-6">
+                            <div class="input-inner">
+                                {!! Form::label('status', 'Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                {!! Form::select(
+                                    'status',
+                                    ['' => 'Select Status'] + ['pending' => 'Pending', 'approved' => 'Approved', 'rejected' => 'Rejected'],
+                                    old('status', $expense->status),
+                                    ['class' => 'form-control form-select select2', 'id' => 'employee', 'required' => true],
+                                ) !!}
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3 col-md-6">
+                            <div class="input-inner">
+                                {!! Form::label('approved_by', 'Approved By', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                {!! Form::select(
+                                    'approved_by',
+                                    ['' => 'Select Employee'] + $employees->pluck('user.name', 'id')->toArray(),
+                                    old('approved_by', $expense->approved_by),
+                                    ['class' => 'form-control form-select select2', 'id' => 'employee', 'required' => true],
+                                ) !!}
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3 col-md-6">
+                            <div class="input-inner">
+                                {!! Form::label('receipt', 'Receipt', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                {!! Form::file('receipt', ['class' => 'form-control']) !!}
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3 col-md-6">
+                            <div class="input-inner">
+                                {!! Form::label('remaining_balance', 'Remaining Balance', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
+                                {!! Form::number('remaining_balance', $lastExpense->remaining_balance ?? '', [
+                                    'class' => 'form-control',
+                                    'id' => 'remaining_balance',
+                                    'readonly' => true,
+                                ]) !!}
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3 col-md-12">
+                            {!! Form::label('description', 'Description', ['class' => 'form-label']) !!}
+                            {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="demo-inline-spacing">
+                            {!! Form::submit($expense->exists ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
                         </div>
                     </div>
-
-                    <div class="col-12 mb-3 col-md-4">
-                        <div class="input-inner">
-                            {!! Form::label('employee_id', 'Employee Name', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                            {!! Form::select(
-                                'employee_id',
-                                ['' => 'Select Employee'] + $employees->pluck('user.name', 'id')->toArray(),
-                                old('employee_id', $expense->employee_id),
-                                ['class' => 'form-control form-select select2', 'id' => 'employee', 'required' => true],
-                            ) !!}
-                        </div>
-                    </div>
-
-                    <div class="col-12 mb-3 col-md-4">
-                        <div class="input-inner">
-                            {!! Form::label('amount', 'Amount', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                            {!! Form::number('amount', null, ['class' => 'form-control', 'id' => 'amount', 'required' => true]) !!}
-                        </div>
-                    </div>
-
-                    <div class="col-12 mb-3 col-md-6">
-                        <div class="input-inner">
-                            {!! Form::label('status', 'Status', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                            {!! Form::select(
-                                'status',
-                                ['' => 'Select Status'] + ['pending' => 'Pending', 'approved' => 'Approved', 'rejected' => 'Rejected'],
-                                old('status', $expense->status),
-                                ['class' => 'form-control form-select select2', 'id' => 'employee', 'required' => true],
-                            ) !!}
-                        </div>
-                    </div>
-
-                    <div class="col-12 mb-3 col-md-6">
-                        <div class="input-inner">
-                            {!! Form::label('approved_by', 'Approved By', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                            {!! Form::select(
-                                'approved_by',
-                                ['' => 'Select Employee'] + $employees->pluck('user.name', 'id')->toArray(),
-                                old('approved_by', $expense->approved_by),
-                                ['class' => 'form-control form-select select2', 'id' => 'employee', 'required' => true],
-                            ) !!}
-                        </div>
-                    </div>
-
-                    <div class="col-12 mb-3 col-md-6">
-                        <div class="input-inner">
-                            {!! Form::label('receipt', 'Receipt', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                            {!! Form::file('receipt', ['class' => 'form-control']) !!}
-                        </div>
-                    </div>
-
-                    <div class="col-12 mb-3 col-md-6">
-                        <div class="input-inner">
-                            {!! Form::label('remaining_balance', 'Remaining Balance', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                            {!! Form::number('remaining_balance', $lastExpense->remaining_balance ?? '', [
-                                'class' => 'form-control',
-                                'id' => 'remaining_balance',
-                                'readonly' => true,
-                            ]) !!}
-                        </div>
-                    </div>
-
-                    <div class="col-12 mb-3 col-md-12">
-                        {!! Form::label('description', 'Description', ['class' => 'form-label']) !!}
-                        {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
-                    </div>
-                    <div class="demo-inline-spacing">
-                        {!! Form::submit($expense->exists ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
-                    </div>
-                </div>
+                {!! Form::close() !!}
             </div>
-            {!! Form::close() !!}
         </div>
     </div>
 

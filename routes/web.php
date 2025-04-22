@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\DepartmentController;
 use App\Http\Controllers\Backend\EmployeeController;
 use App\Http\Controllers\Backend\EmployeeSalaryController;
 use App\Http\Controllers\Backend\ExpenseController;
+use App\Http\Controllers\Backend\HolidayController;
 use App\Http\Controllers\Backend\LeaveController;
 use App\Http\Controllers\Backend\PayrollController;
 use App\Http\Controllers\Backend\PermissionController;
@@ -202,7 +203,17 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
             Route::put('/{expense}', [ExpenseController::class, 'update'])->middleware('permission:update expense')->name('expense.update');
             Route::delete('/{expense}', [ExpenseController::class, 'destroy'])->middleware('permission:delete expense')->name('expense.destroy');
         });
-
+        
+        // Holiday routes
+        Route::group(['prefix' => 'holidays'], function(){
+            Route::get('/', [HolidayController::class, 'index'])->middleware('permission:view holiday')->name('holiday.index');
+            Route::get('/create', [HolidayController::class, 'create'])->middleware('permission:create holiday')->name('holiday.create');
+            Route::post('/', [HolidayController::class, 'store'])->middleware('permission:create holiday')->name('holiday.store');
+            Route::get('/{holiday}/edit', [HolidayController::class, 'edit'])->middleware('permission:update holiday')->name('holiday.edit');
+            Route::put('/{holiday}', [HolidayController::class, 'update'])->middleware('permission:update holiday')->name('holiday.update');
+            Route::delete('/{holiday}', [HolidayController::class, 'destroy'])->middleware('permission:delete holiday')->name('holiday.destroy');
+        });
+        
     // // Home/Dashboard
     Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('permission:view dashboard');
 });

@@ -157,33 +157,34 @@
                     button.prop('disabled', true).text('Processing...');
 
                     $.ajax({
-                        method: "POST",
-                        url: url,
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        headers: {
-                            'X-CSRF-TOKEN': token,
-                        },
-                    })
-                    .done(function(response){
-                        loadingSpinner.hide();
-                        button.prop('disabled', false).text('Submit');
-                        if (self.id === 'assetCreate') {
-                            $(self).trigger('reset');
-                            $(self).find('select').each(function () {
-                                $(this).val($(this).find('option:first').val()).trigger('change');
-                            });
-                        }
-                        toastr.success(response.message || 'Form submitted successfully.');
-                    })
-                    .fail(function(xhr){
-                        handleAjaxError(xhr);
-                    })
-                    .always(function(){
-                        loadingSpinner.hide();
-                        button.prop('disabled', false).text('Submit');
-                    });
+                            method: "POST",
+                            url: url,
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            headers: {
+                                'X-CSRF-TOKEN': token,
+                            },
+                        })
+                        .done(function(response) {
+                            loadingSpinner.hide();
+                            button.prop('disabled', false).text('Submit');
+                            if (self.id === 'assetCreate') {
+                                $(self).trigger('reset');
+                                $(self).find('select').each(function() {
+                                    $(this).val($(this).find('option:first').val()).trigger(
+                                        'change');
+                                });
+                            }
+                            toastr.success(response.message || 'Form submitted successfully.');
+                        })
+                        .fail(function(xhr) {
+                            handleAjaxError(xhr);
+                        })
+                        .always(function() {
+                            loadingSpinner.hide();
+                            button.prop('disabled', false).text('Submit');
+                        });
                 });
             });
         </script>
