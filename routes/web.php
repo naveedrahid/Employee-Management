@@ -162,10 +162,11 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
     });
 
     // Attendance routes
-    Route::group(['prefix' => 'attendances'], function(){ 
+    Route::group(['prefix' => 'attendances'], function(){
         Route::post('/check-in', [AttendanceController::class, 'checkIn'])->middleware('permission:create check_in')->name('attendance.checkIn');
         Route::post('/check-out', [AttendanceController::class, 'checkOut'])->middleware('permission:create check_out')->name('attendance.checkOut');
         Route::get('/', [AttendanceController::class, 'index'])->middleware('permission:view attendance')->name('attendance.index');
+        Route::get('/create', [AttendanceController::class, 'create'])->middleware('permission:create attendance')->name('attendance.create');
         Route::get('/{attendance}', [AttendanceController::class, 'show'])->middleware('permission:view attendance')->name('attendance.show');
         // Route::get('/create', [AttendanceController::class, 'create'])->middleware('permission:create attendance')->name('attendance.create');
         // Route::post('/', [AttendanceController::class, 'store'])->middleware('permission:create attendance')->name('attendance.store');
@@ -211,6 +212,7 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
             Route::post('/', [HolidayController::class, 'store'])->middleware('permission:create holiday')->name('holiday.store');
             Route::get('/{holiday}/edit', [HolidayController::class, 'edit'])->middleware('permission:update holiday')->name('holiday.edit');
             Route::put('/{holiday}', [HolidayController::class, 'update'])->middleware('permission:update holiday')->name('holiday.update');
+            Route::post('/status/{holiday}', [HolidayController::class, 'status'])->middleware('permission:update holiday')->name('holiday.status');
             Route::delete('/{holiday}', [HolidayController::class, 'destroy'])->middleware('permission:delete holiday')->name('holiday.destroy');
         });
         

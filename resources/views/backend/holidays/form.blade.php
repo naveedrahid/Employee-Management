@@ -29,7 +29,7 @@
                     <div class="col-12 mb-3 col-md-6">
                         <div class="input-inner">
                             {!! Form::label('date', 'Date', ['class' => 'form-label']) !!} <span class="text-danger">*</span>
-                            {!! Form::date('date', null, ['class' => 'form-control', 'id' => 'holidayDate', 'required' => true]) !!}
+                            {!! Form::text('date', old('date', $holiday->date), ['class' => 'form-control', 'id' => 'holidayDate', 'required' => true]) !!}
                         </div>
                     </div>
 

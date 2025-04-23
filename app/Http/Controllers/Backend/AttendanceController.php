@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\Employee;
+use App\Models\Holiday;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,17 +14,22 @@ class AttendanceController extends Controller
 {
     public function index()
     {
-        $employees = Employee::whereHas('attendances') // sirf wo jinke attendance hain
-        ->with('user:id,name') // user ka sirf id aur name
-        ->get();
+        $attendances = Attendance::with([
+            'employee' => function ($q) {
+                $q->select('id', 'user_id')
+                    ->with(['user' => function ($q) {
+                        $q->select('id', 'name');
+                    }]);
+            }
+        ])->orderBy('date')->get()->groupBy('date');
 
-    return view('backend.attendances.index', compact('employees'));
+        return view('backend.attendances.index', compact('attendances'));
     }
 
-    //     public function create()
-    //     {
-    //         return view('backend.attendances.form');
-    //     }
+    public function create()
+    {
+        return view('backend.attendances.form');
+    }
 
     //     public function store(Request $request)
     //     {
@@ -89,23 +95,27 @@ class AttendanceController extends Controller
     {
         $month = $request->query('month', Carbon::now()->month);
         $year = $request->query('year', Carbon::now()->year);
-    
+
         $dates = $this->generateDates($month, $year);
-    
-        // Get specific employee attendance only
+
+        $holidays = Holiday::whereMonth('date', $month)
+            ->whereYear('date', $year)
+            ->pluck('name', 'date')
+            ->toArray();
+
         $attendances = Attendance::with('employee.user:id,name')
             ->where('employee_id', $id)
             ->whereMonth('date', $month)
             ->whereYear('date', $year)
             ->get();
-    
+
         $grouped = [];
-    
+
         foreach ($attendances as $att) {
             $employeeId = $att->employee_id;
             $employeeName = $att->employee?->user?->name ?? 'N/A';
             $date = $att->date;
-    
+
             $grouped[$employeeId]['name'] = $employeeName;
             $grouped[$employeeId]['records'][$date] = [
                 'status' => 'Present',
@@ -113,8 +123,8 @@ class AttendanceController extends Controller
                 'check_out' => $att->check_out ? Carbon::parse($att->check_out)->format('H:i') : 'N/A',
             ];
         }
-    
-        return view('backend.attendances.show', compact('month', 'year', 'dates', 'grouped'));
+
+        return view('backend.attendances.show', compact('month', 'year', 'dates', 'grouped', 'holidays'));
     }
 
     private function generateDates($month, $year)

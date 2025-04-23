@@ -7,6 +7,7 @@
         :year="$year"
         :dates="$dates"
         :grouped="$grouped"
+        :holidays="$holidays"
     />
     </x-app-layout>
 

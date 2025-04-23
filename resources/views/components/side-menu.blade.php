@@ -192,6 +192,15 @@
             </li>
         @endcan
 
+        @can('view holiday')
+            <li class="menu-item {{ request()->is('backend/holidays*') ? 'active open' : '' }}">
+                <a href="{{ route('backend.holiday.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                    <div class="text-truncate">Holiday</div>
+                </a>
+            </li>
+        @endcan
+
         <!-- Logout -->
         <li class="menu-item">
             <a href="{{ route('logout') }}" class="menu-link"

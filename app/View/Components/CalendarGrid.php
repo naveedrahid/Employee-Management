@@ -13,13 +13,15 @@ class CalendarGrid extends Component
     public $year;
     public $dates;
     public $grouped;
+    public $holidays;
 
-    public function __construct($month, $year, $dates, $grouped)
+    public function __construct($month, $year, $dates, $grouped, $holidays = [])
     {
         $this->month = $month;
         $this->year = $year;
         $this->dates = $dates;
         $this->grouped = $grouped;
+        $this->holidays = $holidays;
     }
 
     public function render()
