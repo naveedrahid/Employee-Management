@@ -176,45 +176,45 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth'
     });
 
         // Asset routes
-        Route::group(['prefix' => 'assets'], function(){ 
-            Route::get('/', [AssetController::class, 'index'])->middleware('permission:view asset')->name('asset.index');
-            Route::get('/create', [AssetController::class, 'create'])->middleware('permission:create asset')->name('asset.create');
-            Route::post('/', [AssetController::class, 'store'])->middleware('permission:create asset')->name('asset.store');
-            Route::get('/{asset}/edit', [AssetController::class, 'edit'])->middleware('permission:update asset')->name('asset.edit');
-            Route::put('/{asset}', [AssetController::class, 'update'])->middleware('permission:update asset')->name('asset.update');
-            Route::delete('/{asset}', [AssetController::class, 'destroy'])->middleware('permission:delete asset')->name('asset.destroy');
-        });
+    Route::group(['prefix' => 'assets'], function(){ 
+        Route::get('/', [AssetController::class, 'index'])->middleware('permission:view asset')->name('asset.index');
+        Route::get('/create', [AssetController::class, 'create'])->middleware('permission:create asset')->name('asset.create');
+        Route::post('/', [AssetController::class, 'store'])->middleware('permission:create asset')->name('asset.store');
+        Route::get('/{asset}/edit', [AssetController::class, 'edit'])->middleware('permission:update asset')->name('asset.edit');
+        Route::put('/{asset}', [AssetController::class, 'update'])->middleware('permission:update asset')->name('asset.update');
+        Route::delete('/{asset}', [AssetController::class, 'destroy'])->middleware('permission:delete asset')->name('asset.destroy');
+    });
 
-        // Cash Register routes
-        Route::group(['prefix' => 'cash-registers'], function(){ 
-            Route::get('/', [CashRegisterController::class, 'index'])->middleware('permission:view cash_register')->name('cash_register.index');
-            Route::get('/create', [CashRegisterController::class, 'create'])->middleware('permission:create cash_register')->name('cash_register.create');
-            Route::post('/', [CashRegisterController::class, 'store'])->middleware('permission:create cash_register')->name('cash_register.store');
-            Route::get('/{cash_register}/edit', [CashRegisterController::class, 'edit'])->middleware('permission:update cash_register')->name('cash_register.edit');
-            Route::put('/{cash_register}', [CashRegisterController::class, 'update'])->middleware('permission:update cash_register')->name('cash_register.update');
-            Route::delete('/{cash_register}', [CashRegisterController::class, 'destroy'])->middleware('permission:delete cash_register')->name('cash_register.destroy');
-        });
-        
-        // Expense routes
-        Route::group(['prefix' => 'expenses'], function(){
-            Route::get('/', [ExpenseController::class, 'index'])->middleware('permission:view expense')->name('expense.index');
-            Route::get('/create', [ExpenseController::class, 'create'])->middleware('permission:create expense')->name('expense.create');
-            Route::post('/', [ExpenseController::class, 'store'])->middleware('permission:create expense')->name('expense.store');
-            Route::get('/{expense}/edit', [ExpenseController::class, 'edit'])->middleware('permission:update expense')->name('expense.edit');
-            Route::put('/{expense}', [ExpenseController::class, 'update'])->middleware('permission:update expense')->name('expense.update');
-            Route::delete('/{expense}', [ExpenseController::class, 'destroy'])->middleware('permission:delete expense')->name('expense.destroy');
-        });
-        
-        // Holiday routes
-        Route::group(['prefix' => 'holidays'], function(){
-            Route::get('/', [HolidayController::class, 'index'])->middleware('permission:view holiday')->name('holiday.index');
-            Route::get('/create', [HolidayController::class, 'create'])->middleware('permission:create holiday')->name('holiday.create');
-            Route::post('/', [HolidayController::class, 'store'])->middleware('permission:create holiday')->name('holiday.store');
-            Route::get('/{holiday}/edit', [HolidayController::class, 'edit'])->middleware('permission:update holiday')->name('holiday.edit');
-            Route::put('/{holiday}', [HolidayController::class, 'update'])->middleware('permission:update holiday')->name('holiday.update');
-            Route::post('/status/{holiday}', [HolidayController::class, 'status'])->middleware('permission:update holiday')->name('holiday.status');
-            Route::delete('/{holiday}', [HolidayController::class, 'destroy'])->middleware('permission:delete holiday')->name('holiday.destroy');
-        });
+    // Cash Register routes
+    Route::group(['prefix' => 'cash-registers'], function(){ 
+        Route::get('/', [CashRegisterController::class, 'index'])->middleware('permission:view cash_register')->name('cash_register.index');
+        Route::get('/create', [CashRegisterController::class, 'create'])->middleware('permission:create cash_register')->name('cash_register.create');
+        Route::post('/', [CashRegisterController::class, 'store'])->middleware('permission:create cash_register')->name('cash_register.store');
+        Route::get('/{cash_register}/edit', [CashRegisterController::class, 'edit'])->middleware('permission:update cash_register')->name('cash_register.edit');
+        Route::put('/{cash_register}', [CashRegisterController::class, 'update'])->middleware('permission:update cash_register')->name('cash_register.update');
+        Route::delete('/{cash_register}', [CashRegisterController::class, 'destroy'])->middleware('permission:delete cash_register')->name('cash_register.destroy');
+    });
+    
+    // Expense routes
+    Route::group(['prefix' => 'expenses'], function(){
+        Route::get('/', [ExpenseController::class, 'index'])->middleware('permission:view expense')->name('expense.index');
+        Route::get('/create', [ExpenseController::class, 'create'])->middleware('permission:create expense')->name('expense.create');
+        Route::post('/', [ExpenseController::class, 'store'])->middleware('permission:create expense')->name('expense.store');
+        Route::get('/{expense}/edit', [ExpenseController::class, 'edit'])->middleware('permission:update expense')->name('expense.edit');
+        Route::put('/{expense}', [ExpenseController::class, 'update'])->middleware('permission:update expense')->name('expense.update');
+        Route::delete('/{expense}', [ExpenseController::class, 'destroy'])->middleware('permission:delete expense')->name('expense.destroy');
+    });
+    
+    // Holiday routes
+    Route::group(['prefix' => 'holidays'], function(){
+        Route::get('/', [HolidayController::class, 'index'])->middleware('permission:view holiday')->name('holiday.index');
+        Route::get('/create', [HolidayController::class, 'create'])->middleware('permission:create holiday')->name('holiday.create');
+        Route::post('/', [HolidayController::class, 'store'])->middleware('permission:create holiday')->name('holiday.store');
+        Route::get('/{holiday}/edit', [HolidayController::class, 'edit'])->middleware('permission:update holiday')->name('holiday.edit');
+        Route::put('/{holiday}', [HolidayController::class, 'update'])->middleware('permission:update holiday')->name('holiday.update');
+        Route::post('/status/{holiday}', [HolidayController::class, 'status'])->middleware('permission:update holiday')->name('holiday.status');
+        Route::delete('/{holiday}', [HolidayController::class, 'destroy'])->middleware('permission:delete holiday')->name('holiday.destroy');
+    });
         
     // // Home/Dashboard
     Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('permission:view dashboard');
