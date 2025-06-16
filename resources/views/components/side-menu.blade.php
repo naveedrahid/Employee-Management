@@ -192,6 +192,15 @@
             </li>
         @endcan
 
+        @can('view attendance')
+            <li class="menu-item {{ request()->is('backend/attendances*') ? 'active open' : '' }}">
+                <a href="{{ route('backend.attendance.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                    <div class="text-truncate">Attendance</div>
+                </a>
+            </li>
+        @endcan
+
         @can('view holiday')
             <li class="menu-item {{ request()->is('backend/holidays*') ? 'active open' : '' }}">
                 <a href="{{ route('backend.holiday.index') }}" class="menu-link">
